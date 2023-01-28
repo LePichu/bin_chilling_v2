@@ -1,0 +1,104 @@
+@import url("https://unpkg.com/highlightjs@9.16.2/styles/atom-one-dark-reasonable.css");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+    font-family: "Roboto";
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    font-size: 16px;
+    --codeblock-padding: 4rem;
+
+    @media screen and (max-width: 600px) {
+        --codeblock-padding: 0rem; 
+    }
+}
+
+@media screen and (min-width: 600px) {
+    ::-webkit-scrollbar {
+        width: 0%;
+    }
+}
+
+body {
+    margin: 0%;
+    header {
+        background-color: #1e1e1e;
+        color: #ffffff;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        a {
+            img {
+                height: 2rem;
+                width: auto;
+            }
+        }
+        nav {
+            ul {
+                list-style: none;
+                display: flex;
+                li {
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                    margin-left: 1rem;
+                    margin-right: 1rem;
+                    a {
+                        text-decoration: none;
+                        font-weight: 600;
+                        color: #ffffff;
+                    }
+                }
+            }
+        }
+    }
+    #content {
+        padding: 1rem;
+        min-height: 80vh;
+    }
+    footer {
+        background-color: #1e1e1e;
+        color: #ffffff;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        #socials {
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            a {
+                margin: 0 1rem 0 1rem;
+                text-decoration: none;
+                color: #ffffff;
+                height: 2rem;
+                width: 2rem;
+                img {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 2rem;
+                    width: auto;
+                }
+            }
+        }
+        h3 {
+            text-align: center;
+        }
+    }
+}
+
+.hljs {
+    padding: 1rem;
+    margin: 0 var(--codeblock-padding) 0 var(--codeblock-padding);
+    word-spacing: 0.25rem;
+    * {
+        font-family: "JetBrains Mono", monospace;
+    }
+}

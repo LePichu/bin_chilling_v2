@@ -13,6 +13,7 @@ export default function Footer() {
             <h3>
                 © Copyright 2023 - Ishat "LePichu" Gupta
             </h3>
+            <br />
         </footer>
     </>
 }

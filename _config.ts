@@ -4,7 +4,6 @@ import mdx from "lume/plugins/mdx.ts"
 import esbuild from "lume/plugins/esbuild.ts"
 import sass from "lume/plugins/sass.ts"
 import codeHighlight from "lume/plugins/code_highlight.ts"
-import remarkGfm from "npm:remark-gfm"
 
 const site = lume({
     src: "./src"
@@ -12,9 +11,7 @@ const site = lume({
 
 const plugins = [
     jsx_preact(),
-    mdx({
-        remarkPlugins: [remarkGfm]
-    }),
+    mdx(),
     esbuild(),
     sass(),
     codeHighlight()

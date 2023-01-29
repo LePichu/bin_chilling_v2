@@ -1,2 +1,2 @@
 # Bin Chilling V2: The Sequel
-![Bin Chilling](./bin_chilling.gif)
+![Bin Chilling](https://tenor.com/bD5rR.gif)

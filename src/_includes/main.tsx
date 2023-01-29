@@ -31,18 +31,18 @@ export default function Layout(props: Props) {
                     <meta
                         property="og:image"
                         content={
-                            `${URL}/${props.meta.image}` ?? `${URL}/assets/icon.png`
+                            props.meta.image ?? `${URL}/assets/icon.png`
                         }
                     />
                     <meta
                         property="twitter:image"
                         content={
-                            `${URL}/${props.meta.image}` ?? `${URL}/assets/icon.png`
+                            props.meta.image ?? `${URL}/assets/icon.png`
                         }
                     />
                     <meta property="og:url" content={URL} />
                     <meta name="theme-color" content={
-                        props.meta.theme ?? "##1b3f4b"
+                        props.meta.theme ?? "#1b3f4b".toUpperCase()
                     } />
                 </head>
                 <body>

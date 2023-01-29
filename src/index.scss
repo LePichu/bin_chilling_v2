@@ -5,6 +5,10 @@
 * {
     font-family: "Roboto";
     -webkit-tap-highlight-color: transparent;
+    ::selection {
+        color: white;
+        background-color: black;
+    }
 }
 
 :root {

@@ -4,6 +4,7 @@ import mdx from "lume/plugins/mdx.ts"
 import esbuild from "lume/plugins/esbuild.ts"
 import sass from "lume/plugins/sass.ts"
 import codeHighlight from "lume/plugins/code_highlight.ts"
+import remarkGfm from "npm:remark-gfm"
 
 const site = lume({
     src: "./src"
@@ -11,7 +12,9 @@ const site = lume({
 
 const plugins = [
     jsx_preact(),
-    mdx(),
+    mdx({
+        remarkPlugins: [remarkGfm]
+    }),
     esbuild(),
     sass(),
     codeHighlight()
@@ -20,5 +23,6 @@ const plugins = [
 plugins.forEach(plugin => site.use(plugin))
 
 site.copy("assets")
+site.copy("server.ts")
 
 export default site

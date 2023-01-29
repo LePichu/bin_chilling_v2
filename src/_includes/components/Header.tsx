@@ -6,7 +6,7 @@ export default function Header() {
             </a>
             <nav>
                 <ul>
-                    {["ABOUT", "BLOG"].map(x => <li><a href={x.toLowerCase()}>{x}</a></li>)}
+                    {["ABOUT", "BLOG"].map(x => <li><a href={`/${x.toLowerCase()}`}>{x}</a></li>)}
                 </ul>
             </nav>
         </header>

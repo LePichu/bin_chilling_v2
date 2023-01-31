@@ -4,6 +4,8 @@ import mdx from "lume/plugins/mdx.ts"
 import esbuild from "lume/plugins/esbuild.ts"
 import sass from "lume/plugins/sass.ts"
 import codeHighlight from "lume/plugins/code_highlight.ts"
+import HeadingsSlug from "npm:rehype-slug"
+import AutolinksHeadings from "npm:rehype-autolink-headings"
 
 const site = lume({
     src: "./src"
@@ -11,7 +13,9 @@ const site = lume({
 
 const plugins = [
     jsx_preact(),
-    mdx(),
+    mdx({
+        rehypePlugins: [HeadingsSlug, AutolinksHeadings]
+    }),
     esbuild(),
     sass(),
     codeHighlight()

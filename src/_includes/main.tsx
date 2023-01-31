@@ -9,8 +9,9 @@ interface Props {
         title: string | undefined
         description: string | undefined
         image: string | undefined
-        theme : string | undefined
+        theme: string | undefined
     }
+    blog: boolean
 }
 
 export default function Layout(props: Props) {
@@ -28,14 +29,15 @@ export default function Layout(props: Props) {
                     <title>{props.meta.title ?? "LePichu | Website"}</title>
 
                     <meta name="description" content={props.meta.description ?? "LePichu | Website"} />
+                    <meta name="twitter:card" content="summary_large_image" />
                     <meta
-                        property="og:image"
+                        property="twitter:image"
                         content={
                             props.meta.image ?? `${URL}/assets/icon.png`
                         }
                     />
                     <meta
-                        property="twitter:image"
+                        property="og:image"
                         content={
                             props.meta.image ?? `${URL}/assets/icon.png`
                         }
@@ -47,7 +49,9 @@ export default function Layout(props: Props) {
                 </head>
                 <body>
                     <Header />
-                    <div id="content">
+                    <div id={
+                        props.blog ? "blog-content" : "content"
+                    }>
                         {props.children}
                     </div>
                     <Footer />

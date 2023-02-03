@@ -30,6 +30,11 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
+hr { 
+    min-width: 100%;
+    margin: 1rem 0;
+}
+
 #blog-index {
     list-style: none;
     padding: 0;
@@ -55,29 +60,91 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
     img {
         max-width: max-content;
+        // media query for desktop
+        @media screen and (min-width: 600px) {
+            max-width: calc(100% / 1.5);
+            margin: auto;
+        }
     } 
+    span {
+        font-size: 1.25rem;
+        margin-right: 0.5rem;
+    }
     h1 {
         opacity: 50%;
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         align-items: center;
         max-width: fit-content;
         display: flex;
         height: 32px;
+        margin-bottom: 0.5rem;
+        &:last-of-type {
+            margin-bottom: 0;
+        }
     }
 }
 
+#about {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    img {
+        height: 8rem;
+        width: auto;
+        border-radius: 50%;
+    }
+    #about-text {
+        margin-left: 2rem;
+        span {
+            font-weight: bold;
+            color: #D46248;
+        }
+        h1, h2, h3 {
+            font-weight: lighter;
+        }
+    }
+}
 
-:root {
-    font-size: 16px;
-    --codeblock-padding: 8rem;
+#langs {
+    text-align: center;
+    h1 {
+        margin: 1rem;
+    }
+    section {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
 
-    @media screen and (max-width: 600px) {
-        --codeblock-padding: 0rem; 
+        @media screen and (min-width: 600px) {
+            padding: 0 8rem;
+        }
+
+        @media screen and (max-width: 600px) {
+            flex-direction: column;
+        }
+
+        img {
+            margin: auto;
+            height: 8rem;
+            width: auto;
+            filter: grayscale(100%);
+            opacity: 50%;
+            transition: 0.25s;
+            scale: 75%;
+            &:hover {
+                filter: grayscale(0%);
+                scale: 100%;
+                opacity: 100%;
+            }
+        }
     }
 }
 
 @media screen and (min-width: 600px) {
     ::-webkit-scrollbar {
+        height: 0%;
         width: 0%;
     }
 }
@@ -131,6 +198,13 @@ header {
         padding-left: 8rem;
         padding-right: 8rem;
     }
+    p {
+        @media screen and (max-width: 600px) {
+            img {
+                max-width: 24rem;
+            }   
+        }
+    }
 }
 
 footer {
@@ -165,7 +239,6 @@ footer {
 
 .hljs {
     padding: 1rem;
-    margin: 0 var(--codeblock-padding) 0 var(--codeblock-padding);
     word-spacing: 0.25rem;
     * {
         font-family: "JetBrains Mono", monospace;

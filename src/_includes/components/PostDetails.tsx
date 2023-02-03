@@ -15,21 +15,17 @@ export default function PostDetails(props: Props) {
                 {props.read_time}
             </h1>
 
-            <br />
-
             <h1>
                 <span class="material-icons">insert_invitation</span>
                 {props.publish}
             </h1>
-
-            <br />
 
             <h1>
                 <span class="material-icons">people</span>
                 {new Intl.ListFormat("en-US", { style: "long", type: "conjunction" }).format(props.written_by)}
             </h1>
 
-            <br />
+            <hr />
         </section>
     </>
 }

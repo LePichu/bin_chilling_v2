@@ -1,3 +1,5 @@
+deno task lume
+
 Set-Location ".\_site"
 
 git init

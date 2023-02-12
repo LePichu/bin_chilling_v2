@@ -8,20 +8,20 @@ import HeadingsSlug from "npm:rehype-slug"
 import AutolinksHeadings from "npm:rehype-autolink-headings"
 
 const site = lume({
-    src: "./src"
+	src: "./src",
 })
 
 const plugins = [
-    jsx_preact(),
-    mdx({
-        rehypePlugins: [HeadingsSlug, AutolinksHeadings]
-    }),
-    esbuild(),
-    sass(),
-    codeHighlight()
+	jsx_preact(),
+	mdx({
+		rehypePlugins: [HeadingsSlug, AutolinksHeadings],
+	}),
+	esbuild(),
+	sass(),
+	codeHighlight(),
 ]
 
-plugins.forEach(plugin => site.use(plugin))
+plugins.forEach((plugin) => site.use(plugin))
 
 site.copy("assets")
 site.copy("server.ts")

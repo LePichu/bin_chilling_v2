@@ -1,0 +1,113 @@
+h1, h2, h3, h4, h5, h6 {
+    margin: 0%;
+    a[tabindex="-1"] {
+        text-decoration: none;
+        .icon-link {
+            margin-right: 0.5rem;
+            color: #5f5f5f;
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+            &::after {
+                content: "#";
+            }
+
+        }
+    }
+}
+
+hr { 
+    min-width: 100%;
+    margin: 1rem 0;
+}
+
+p {
+    margin: 1.5rem 0;
+}
+
+#blog-index {
+    list-style: none;
+    padding: 0;
+    li {
+        margin-bottom: 0.5rem;
+        border: 0.1rem solid #5f5f5f;
+        padding: 0.5rem;
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        h3 {
+            display: flex;
+            align-items: center;
+            opacity: 50%;
+        }
+        span {
+            margin-right: 0.25rem;
+        }
+        &::marker {
+            display: none;
+        }
+    }
+}
+
+.blog-post {
+    text-decoration: none;
+    color: #5f5f5f;
+    border: 1px solid #5f5f5f;
+    padding: 0.5rem;
+    display: flex;
+}
+
+.post-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    img {
+        max-width: max-content;
+        // media query for desktop
+        @media screen and (min-width: 600px) {
+            max-width: calc(100% / 1.5);
+            margin: auto;
+        }
+    } 
+    span {
+        font-size: 1.25rem;
+        margin-right: 0.5rem;
+    }
+    h1 {
+        opacity: 50%;
+        font-size: 1.25rem;
+        align-items: center;
+        max-width: fit-content;
+        display: flex;
+        height: 32px;
+        margin-bottom: 0.5rem;
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+}
+
+#blog-content {
+    h1 {
+        &:first-of-type {
+            a[tabindex="-1"] {
+                display: none;
+            }
+        }
+    }
+    padding: 1rem;
+    min-height: 80vh;
+    @media screen and (min-width: 600px) {
+        padding-left: 8rem;
+        padding-right: 8rem;
+    }
+    p {
+        @media screen and (max-width: 600px) {
+            img {
+                max-width: 24rem;
+            }   
+        }
+    }
+}

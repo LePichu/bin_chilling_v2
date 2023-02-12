@@ -122,18 +122,33 @@ export default function About() {
 
 			<section id="worked-on">
 				<h1>
-					... and I have worked on...
+					... and I have worked on/at...
 				</h1>
 
 				<br />
 
 				<section>
 					{Object.entries({
-						"RaptorFX": "https://raptorfx.deno.dev",
-						"Salta": "https://github.com/ReMod-Software/Salta",
+						"RaptorFX": {
+							link: "https://raptorfx.deno.dev", 
+							img: "/assets/works/raptorfx.png",
+							desc: "A Project which aims to allow App Development using Deno and WebViews."
+						},
+						"Salta": {
+							link: "https://github.com/ReMod-Software/Salta", 
+							img: "/assets/works/salta.png",
+							desc: "A Dart-Sass wrapper for Deno."
+						},
+						"Shighruh": {
+							link: "https://github.com/ReMod-Software/Shighruh",
+							img: "/assets/works/shighruh.png",
+							desc: "A Small project which aims to provide better Svelte integration on Deno."
+						}
 					}).map(([k, v]) => (
 						<div>
-							<a href={v}>{k}</a>
+							<img src={v.img} /> <br />
+							<a href={v.link}>{k}</a>
+							<p>{v.desc}</p>
 						</div>
 					))}
 				</section>

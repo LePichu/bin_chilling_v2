@@ -1,0 +1,24 @@
+---
+layout: main.tsx
+meta: 
+    title: "LePichu | Blog"
+    description: "The Death of the Deno Runtime and its goals."
+    image: "https://lepichudoes.deno.dev/assets/posts/deno_death_thumbnail.png"
+    theme: "#FFFFFF"
+blog: true
+---
+import PD from "../_includes/components/PostDetails.tsx"
+
+# Death of the Dinosaur
+
+<PD thumbnail="/assets/posts/deno_death_thumbnail.png" read_time="1 Minute" publish="04/02/2023" written_by={["LePichu"]} />
+
+_This post is more of a rant and a tiny announcement. As Deno continues to downgrade itself, I and others no longer have the energy to deal with its bullshit._
+
+I am officially leaving development with Deno as of Deno 1.31. Deno Developers do not want to stick to their own goals. At this point, Deno is just a worse Node.js and hell, Node.js is doing a better job than Deno at being Deno recently. I mean to point at recent additions like:
+
+- URL Imports
+- Loaders
+- Permissions Model
+
+The above and lots of other things are on their way to Node.js. At ReMod Software, we are halting any work on Deno-related projects until Deno Developers can get their shit together. Popular projects like DWM-GUI and Deno-TUI also have expressed that they are shelving while Deno continues to evolve back into the mess it tried to restore. Deno is becoming a marketing gimmick instead of a good tool. Please remember that 1.31's "marketing" feature, a.k.a `package.json` support, had received a lot of community backlash, hence why it did not ship in 1.30, yet it did now in 1.31.

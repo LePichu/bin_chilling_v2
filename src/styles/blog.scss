@@ -12,7 +12,6 @@ h1, h2, h3, h4, h5, h6 {
             &::after {
                 content: "#";
             }
-
         }
     }
 }
@@ -108,6 +107,12 @@ p {
             img {
                 max-width: 24rem;
             }   
+        }
+    }
+    a {
+        color: #58a6ff;
+        &:visited {
+            color: #58a6ff;
         }
     }
 }

@@ -35,6 +35,9 @@ p {
         a {
             text-decoration: none;
             color: black;
+            @media (prefers-color-scheme: dark) {
+                color: white;
+            }
         }
         h3 {
             display: flex;
@@ -68,6 +71,7 @@ p {
         @media screen and (min-width: 600px) {
             max-width: calc(100% / 1.5);
             margin: auto;
+            padding: 1rem 0rem
         }
     } 
     span {

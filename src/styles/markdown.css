@@ -1,0 +1,11 @@
+@import url("https://unpkg.com/highlightjs@9.16.2/styles/atom-one-dark-reasonable.css");
+
+#content:h1,
+#content:h2,
+#content:h3 {
+    margin: 0;
+}
+
+#content:p {
+    margin: 1.5rem 0;
+}

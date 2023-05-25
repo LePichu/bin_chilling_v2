@@ -1,0 +1,30 @@
+@Import url("./styles/tailwind.css");
+@import url("https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap");
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0px;
+    min-height: 100vh;
+    font-family: "IBM Plex Sans";
+}
+
+header > a > h1 {
+    font-family: "Zilla Slab";
+}
+
+header > nav, footer > p {
+    font-family: "IBM Plex Serif";
+}
+
+header > nav > svg {
+    max-height: 2rem;
+    max-height: 2rem;
+}

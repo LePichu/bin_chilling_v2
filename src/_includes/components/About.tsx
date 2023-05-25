@@ -130,20 +130,22 @@ export default function About() {
 				<section>
 					{Object.entries({
 						"RaptorFX": {
-							link: "https://raptorfx.deno.dev", 
+							link: "https://raptorfx.deno.dev",
 							img: "/assets/works/raptorfx.png",
-							desc: "A Project which aims to allow App Development using Deno and WebViews."
+							desc:
+								"A Project which aims to allow App Development using Deno and WebViews.",
 						},
 						"Salta": {
-							link: "https://github.com/ReMod-Software/Salta", 
+							link: "https://github.com/ReMod-Software/Salta",
 							img: "/assets/works/salta.png",
-							desc: "A Dart-Sass wrapper for Deno."
+							desc: "A Dart-Sass wrapper for Deno.",
 						},
 						"Shighruh": {
 							link: "https://github.com/ReMod-Software/Shighruh",
 							img: "/assets/works/shighruh.png",
-							desc: "A Small project which aims to provide better Svelte integration on Deno."
-						}
+							desc:
+								"A Small project which aims to provide better Svelte integration on Deno.",
+						},
 					}).map(([k, v]) => (
 						<div>
 							<img src={v.img} /> <br />

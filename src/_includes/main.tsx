@@ -50,11 +50,12 @@ export default function Layout(props: Props) {
 						content={props.meta.theme ?? "#1b3f4b".toUpperCase()}
 					/>
 				</head>
+
 				<body>
 					<Header />
-					<div id={props.blog ? "blog-content" : "content"}>
+					<main id={props.blog ? "blog-content" : "content"}>
 						{props.children}
-					</div>
+					</main>
 					<Footer />
 				</body>
 			</html>

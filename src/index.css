@@ -1,10 +1,18 @@
-@Import url("./styles/tailwind.css");
+@import url("./styles/tailwind.css");
+@import url("./styles/markdown.css");
 @import url("https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
 
 ::-webkit-scrollbar {
     width: 0px;
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+    scroll-margin-block-start: 4.5rem;
 }
 
 body {
@@ -16,15 +24,19 @@ body {
     font-family: "IBM Plex Sans";
 }
 
-header > a > h1 {
+#lepichu-text, .blog-details-text {
     font-family: "Zilla Slab";
 }
 
-header > nav, footer > p {
+footer, .header-nav {
     font-family: "IBM Plex Serif";
 }
 
 header > nav > svg {
     max-height: 2rem;
     max-height: 2rem;
+}
+
+header {
+    backdrop-filter: blur(0.175rem);
 }

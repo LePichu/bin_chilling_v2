@@ -14,43 +14,52 @@ const TableIcon = (
 )
 
 export default function Header() {
-	const modelRef = createRef<HTMLDialogElement>()
-
 	return (
 		<>
-			<header class="sticky p-4 flex justify-between items-center">
-				<a href="/">
-					<h1 class="bg-black text-white py-2 px-4 m-0">
-						LePichu
-					</h1>
-				</a>
-				<nav class="hidden md:flex flex-row gap-8">
+			<header class="p-4 flex flex-col sticky top-0">
+				<section class="flex justify-between items-center">
+					<a href="/" className="no-underline">
+						<h1
+							class="bg-black text-white py-2 px-4 m-0"
+							id="lepichu-text"
+						>
+							LePichu
+						</h1>
+					</a>
+					<nav
+						class="hidden md:flex flex-row gap-8"
+						id="header-nav-desktop"
+					>
+						{["Blog", "Portfolio"].map((x) => (
+							<a
+								href={`/${x.toLowerCase()}`}
+								class="text-2xl font-bold text-black visited:text-black no-underline hover:underline header-nav"
+							>
+								{x}
+							</a>
+						))}
+					</nav>
+					<nav
+						className="md:hidden aspect-square flex h-12 w-12 justify-center items-center bg-black rounded"
+						id="header-nav-button"
+					>
+						<button className="flex h-full w-full justify-center items-center bg-transparent border-none">
+							{TableIcon}
+						</button>
+					</nav>
+				</section>
+				<nav
+					class="hidden mt-4 justify-evenly items-center"
+					id="header-nav-mobile"
+				>
 					{["Blog", "Portfolio"].map((x) => (
 						<a
 							href={`/${x.toLowerCase()}`}
-							class="text-2xl font-bold text-black visited:text-black no-underline hover:underline"
+							class="text-xl font-bold text-black visited:text-black no-underline hover:underline header-nav"
 						>
 							{x}
 						</a>
 					))}
-				</nav>
-				<nav className="md:hidden aspect-square flex h-12 w-12 justify-center items-center bg-black rounded">
-					{
-						/* <button
-						onClick={() => {
-							modelRef.current?.showModal()
-						}}
-					>
-					</button>
-					<dialog ref={modelRef}>
-					</dialog> */
-					}
-					{
-						/* <button className="box-border bg-black outline-none flex w-full aspect-square">
-						{TableIcon}
-					</button> */
-					}
-					{TableIcon}
 				</nav>
 			</header>
 		</>

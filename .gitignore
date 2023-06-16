@@ -1,5 +1,7 @@
 .vscode
 .idea
 
+.obsidian
+
 deno.lock
 _site

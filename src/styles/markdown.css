@@ -1,11 +1,91 @@
-@import url("https://unpkg.com/highlightjs@9.16.2/styles/atom-one-dark-reasonable.css");
+/* @import url("https://unpkg.com/highlightjs@9.16.2/styles/atom-one-dark-reasonable.css"); */
+@import url("https://unpkg.com/highlightjs@9.16.2/styles/an-old-hope.css");
 
-#content:h1,
-#content:h2,
-#content:h3 {
-    margin: 0;
+#blog-content a {
+    color: #4FB4D7;
+    text-decoration: none;
 }
 
-#content:p {
-    margin: 1.5rem 0;
+#blog-content h1 a[tabindex="-1"] {
+    color: grey;
+    opacity: 0.25;
+    font-size: 1.75rem;
+    text-decoration: none;
+    transition: 250ms;
+    margin-right: 0.5rem
+}
+
+#blog-content a:hover {
+    text-decoration: underline;
+}
+
+#blog-content a[href="#blog-footer"] {
+    color: black;
+}
+
+#blog-content h1 a:hover {
+    font-size: 2rem;
+    opacity: 0.5;
+}
+
+#blog-content>p:first-of-type {
+    margin-top: 1.75rem;
+}
+
+#blog-content > h1 > a::after {
+    content: "@";
+}
+
+p>code,
+a>code {
+    display: inline-block;
+    word-break: break-all;
+    background-color: rgb(230, 230, 230);
+    color: #4FB4D7;
+    border: 1px solid grey;
+    padding: 0rem 0.25rem;
+    margin: 0rem 0.25rem;
+    border-radius: 0.25rem;
+    font-family: "Fira Code", monospace;
+}
+
+p>code {
+    color: rgb(32, 32, 32);
+}
+
+a>code:hover {
+    text-decoration: underline;
+}
+
+blockquote {
+    margin: 0rem;
+    padding: 1rem;
+    background-color: rgb(238, 238, 238);
+    border-left: 5px solid black;
+    text-align: center;
+}
+
+.hljs {
+    display: block;
+    padding: 1rem;
+    font-family: "Fira Code", monospace;
+    overflow-x: scroll;
+    border-radius: 0.5rem;
+}
+
+.hljs>* {
+    font-family: "Fira Code", monospace;
+}
+
+@media (any-pointer: coarse) and (min-width: 768px) {
+    @media (orientation: portrait) {
+        #blog-content {
+            padding: 0rem 4rem;
+        }
+    }
+    @media (orientation: landscape) {
+        #blog-content {
+            padding: 0rem 12rem;
+        }
+    }
 }

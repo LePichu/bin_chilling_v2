@@ -13,6 +13,7 @@ export default function Footer() {
 						<a
 							href={v}
 							class="h-12 w-12 no-underline opacity-50 hover:opacity-100 duration-[250ms]"
+							target="_blank"
 						>
 							<img
 								src={`/assets/socials/${k}.png`}
@@ -23,7 +24,9 @@ export default function Footer() {
 				</section>
 
 				<p class="text-white text-center font-normal text-xl m-0">
-					© Copyright 2023 - Ishat "LePichu" Gupta
+					© Copyright 2023{" "}
+					<span class="hidden md:inline-block">{"-"}</span>{" "}
+					<br class="md:hidden" /> Ishat "LePichu" Gupta
 				</p>
 			</footer>
 		</>

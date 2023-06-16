@@ -1,5 +1,5 @@
-import Server from "https://deno.land/x/lume@v1.15.1/core/server.ts"
-import not_found from "https://deno.land/x/lume@v1.15.1/middlewares/not_found.ts"
+import Server from "https://deno.land/x/lume@v1.17.5/core/server.ts"
+import not_found from "https://deno.land/x/lume@v1.17.5/middlewares/not_found.ts"
 
 const server = new Server({
 	port: 8000,

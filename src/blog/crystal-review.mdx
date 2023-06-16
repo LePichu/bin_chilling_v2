@@ -1,0 +1,107 @@
+---
+layout: main.tsx
+meta:
+    title: "An Honest and Brutal Review of the Crystal Language"
+    description: "A Review of how far the Crystal language has come in 2023."
+    image: ""
+    theme: "#FFFFFF"
+blog: true
+authors: [
+	"LePichu",
+    "pluiedev"
+]
+publish: "22th June 2023"
+time: "0.0 Minutes"
+---
+
+%%I really wish I had better words for this, but I do not, Crystal was once a promising language I looked up to but considering how far it has come this slowly, not anymore.%% 
+
+[Crystal](https://crystal-lang.org) is a language that advertises the slickness of Ruby with the performance of C, it has been around for 10 years yet people barely know of it's existence, why is that? There are a lot of reasons to it but they are of course, related to how the programming language itself is right now. To understand what I mean we need to take a thorough look into the language, the syntax, the tooling, and more. This review will be an honest opinion of two former Ruby enthusiasts and their views on Crystal, we will take a look into:
+
+- The General Syntax
+- Performance compared to other languages
+- Tooling like IDE Support, formatters, etc.
+- Standard Library and its design
+- Platform Support
+- Community
+- What does it bring to the table?
+- Where does it lack?
+- What can it learn from other languages
+
+# General Syntax
+Starting with the basic building block, the syntax of the language. Crystal is based off of Ruby's syntax, naturally, there will be a massive overlap but also differences, a tiny cheat sheet of the Crystal syntax is:
+
+```crystal
+enum Species
+	Cat
+	Dog
+	Human
+end
+
+name = "LePichu"
+age = 4
+specie = Species::Cat 
+
+class Example
+	@someProperty = "Meow"
+	@@somePrivateProperty = "Nya"
+	
+	def say_something() 
+		puts "#{@someProperty}, #{@somePrivateProperty}"
+	end
+end
+
+example = Example.new
+
+# This will print "Meow, Nya"
+example.say_something
+```
+
+Additionally, there are changes from Ruby too, specifically:
+
+```crystal
+# Crystal
+multiline = """
+	Some String!
+"""
+
+# Ruby
+multiline = "
+	Some String!
+"
+```
+
+While it does borrow most of Ruby's nice things, and tweaks some, it is worth noting they missed out on making things like class properties more "readable", `@someProperty` should be something like just `property`, no more `@` at the beginning, this is a minor nitpick of my own though.
+
+# Performance
+Crystal used to advertise being "Fast as C", but that in itself was a very broad statement in itself and didn't really mean much. What is it fast at? Compile time? Runtime Perhaps? We can benchmark Crystal against several other languages for various things and see the result for ourselves.
+
+All of the following benchmarks are done on a Windows Machine, running WSL2 on this specific hardware:
+- CPU: i5-7200U
+- RAM: 8GB DDR3 SODIMM
+- 1TB HDD (approx. 5400RPM)
+
+The benchmarks will be done in the following languages against Crystal:
+- Rust (v1.70.0)
+- JavaScript/TypeScript (Deno v.1.34.2)
+- Ruby (with YJIT)
+- C#
+
+The source code for all the benchmarks will be available on my GitHub as usual, at [LePichu/Crystal-Review-Benchmarks](https://github.com/LePichu/Crystal-Review-Benchmarks).
+
+## Number Crunching
+### Fibonacci
+
+
+### Counting Squares till 1M
+
+
+## Real World Cases of I/O
+### HTTP Server
+The HTTP Servers are benchmarked via the help of [Bombardier](https://github.com/codesenberg/bombardier), a simple and fast cross-platform HTTP Server Benchmarking Tool written in Go. 
+
+
+
+I was actually for some reason not surprised by this result, considering I have seen Ruby with TruffleRuby or YJIT out speeding Crystal in benchmarks before. What I do find funny is Deno being faster than Crystal, despite being fully aware the HTTP Server is built on `hyper-rs`, currently, they are rewriting the Flash server to go even faster, so that might even make Crystal's HTTP even slower in the future too.
+
+### File Read/Write

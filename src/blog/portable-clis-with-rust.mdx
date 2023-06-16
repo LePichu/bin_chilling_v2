@@ -1,0 +1,255 @@
+---
+layout: main.tsx
+meta:
+    title: "Portable CLIs with Rust and WebAssembly"
+    description: "A write-up on making portable CLIs with Rust and WASM."
+    image: "https://lepichudoes.deno.dev/assets/posts/portable_clis_with_rust.png"
+    theme: "#095922"
+blog: true
+authors: [
+	"LePichu"
+]
+publish: "9th June 2023"
+time: "17.2 Minutes"
+---
+
+About a few weeks ago, I was wondering how I wanna approach writing the CLI for **[RaptorFX](https://raptorfx.deno.dev)**, which is a GUI Library, or rather Framework that I have been working on with [Arc](https://github.com/Arc-blroth) and a few friends for about a year and half at this point.
+
+As **RaptorFX** is a Deno-related project, naturally, I thought about using something for JS/TS. I went over my options, specifically things like *Yargs*, *Cliffy*, and to some extent I tried looking into *OCLIF*, none of them really were any good to be honest which led me into making my own experiment called **Pyroraptor**. But that is for another time, y'all are here for CLIs in Rust. Let's skip to that instead.
+
+So how did I get here? Well, like I said, the JS/TS options were no good. Then I remembered, *"oh hey I also write Rust, and we are using Rust in Raptor already, why not oxidize another component while at it?"*, and so it began. But quickly, a major problem arose to me, how do I make it easy to distribute without it being hell? I would have to not only compile Rust for like, 7 different platforms, but also make it so that we ship for usage via the `deno` CLI. Now, I could have gone using the native shared library route, yes, but that is inefficient. Then it dawned on me, *"maybe WASM is the route?"*. And so it began, I decided to use `clap-rs` for this because I have had a lot of fun with it in the past, it is a genuinely good crate and really shows how nice the Rust ecosystem is at libraries despite having a relatively smaller ecosystem. Honestly, going in I did not know if clap had WASM support, in fact it was well after the fact that I picked clap I realized, *"oh huh, I can do WASM and solve the distribution issue!"*, but eh, whatever, good thing it did honestly, it was kinda hellish to figure out how to get it working but its all good in the end, else I wouldn't be writing this interesting bit o' chattering on the inter-webs.
+
+# Oxidizing the Command Line
+
+Alright so, let's begin with how a basic `clap` program looks and works; straight from the official examples with a slight modification, we have:
+```rust
+use clap::Parser;
+use colored::Colorize;
+
+/// Simple program to greet a person
+#[derive(Parser, Debug)]
+#[command(author, version, about, long_about = None)]
+struct Args {
+	/// Name of the person to greet
+	#[arg(short, long)]
+	name: String,
+
+	/// Number of times to greet
+	#[arg(short, long, default_value_t = 1)]
+	count: u8,
+}
+
+fn main() {
+	let args = Args::parse();
+	for _ in 0..args.count {
+		println!("Hello {}", args.name.green())
+	}
+}
+```
+
+Let's go over what it does, it takes in 2 parameters called `count` and `name`, as we can see in the main function, it prints out the `name` you provide the number of times you passed in with `count`. But what happens if you provide only one or neither? Well, `clap` is good at CLIs, it would error out if you provide only `count` but not `name`. `clap` runs on macro-magic, which is nice for DX as it really helps you make CLIs in an intuitive way. As we have already seen, the attribute field `default_value_t` adds a default value to a field, or rather flag and makes it optional.
+
+Well, that's a tiny introduction to `clap`, but I think that's enough training to get off and to the real good part of this write-up. If anyone is interested, `clap` offers a stellar guide in their docs, or you can browse the [GitHub Repository](https://github.com/clap-rs/clap/blob/master/examples/tutorial_derive/) to look at the guide in a more code-oriented fashion provided by GitHub's viewer. Let's get started with the WASM part!
+
+# Corroding with the Web's Power
+Finally, this is the part perhaps most of us were waiting for the, the compiling and getting to ship the CLI everywhere easily!
+
+Well, like everything, this has layers and ways we can do this as. There is what I call the classic approach, which is a simple linking via file paths. But first, we need to compile it to WASM! Now you may think, *"wait. clap can compile to WASM properly?"*, well, the short answer is yes but the long answer is yes and no. You see, Rust has stellar WASM support but for something like `clap` which needs I/O? Not really a good choice, I haven't experimented with it much but using the builder pattern and the `parse_from` method on the instance of a clap CLI, you can use parse any array as set of arguments. That may or may not work under `wasm32-unknown-unknown`, which is why we compile to `wasm32-wasi` with the default clap settings, where it parses from the environment's arguments.
+
+```shell
+$> cargo build --target wasm32-wasi
+```
+
+This will produce a rather heavy bundle at first, but we can strip it down later using flags and co. For now, this produces an usable WASM binary for use, now we just need to load it in a runtime which supports running WASI-based WASM applications. We have a few contenders for this in fact.
+
+# Hello, My Extinct Dinosaur Friend
+One of the runtimes I will demonstrate this working with is, of course, everyone's favorite dinosaur runtime for web tech on the backend: Deno!
+
+With Deno, it's fairly straight-forward with the WASI Runner being part of the Standard Library. All it requires is some fairly basic glue code.
+
+```ts
+import Context from "https://deno.land/std@0.190.0/wasi/snapshot_preview1.ts"
+
+const context = new Context({
+    args: ["My Silly WASM CLI", ...Deno.args],
+    env: Deno.env.toObject(),
+})
+
+const instance = await WebAssembly.instantiateStreaming(fetch(import.meta.resolve("./target/wasm32-wasi/release/my_silly_wasm_cli.wasm")), {
+    "wasi_snapshot_preview1": context.exports,
+})
+
+context.start(instance.instance)
+```
+
+This is a bit different from the official example code in the Standard Library, it's modified a tiny bit by my friend [Skye](https://github.com/MierenManz) to initiate compilation of the WASM Binary as it loads, resulting in a faster boot up time. Now, unlike a traditional CLI, or even a program honestly, most runtimes (this includes Node and Wasmtime) that I am aware of first quickly compile WASM to OS-specific native code (i.e. JIT Compilation, often with caching of some sort to some extent) so it can go extremely *nyooooom~* quickly. Thus, the first bootup may take some time, the consecutive loads, however, will not and will be instant as if it was a native program.
+
+Oh, you also might be wondering, why am I passing `"My Silly WASM CLI"` before `Deno.args`, that is because for reasons `clap` running under WASM needs that a name of sorts for the CLI, which it picks as the `$arg0` (the first argument of the program) provided, otherwise it does not take in the actual parameters (unless you provide name at runtime by passing it), it was explained by [Nemo](https://github.com/Nemo157) in the [Rust Programming Language Community Server](https://discord.gg/rust-lang-community). For the specific point where it was discussed, please refer to [this link](https://canary.discord.com/channels/273534239310479360/943315667430563862/1113133342993436782).
+
+But anyways, how about we run it shall we?
+
+```shell
+$> deno run --allow-env --allow-read my_silly_wasm_cli.ts --name "LePichu" -c 10
+```
+
+Voila! We get something back:
+
+```shell
+$> deno run --allow-env --allow-read .\my_silly_wasm_cli.ts --name "LePichu" -c 10
+Hello LePichu!
+Hello LePichu!
+Hello LePichu!
+Hello LePichu!
+Hello LePichu!
+Hello LePichu!
+Hello LePichu!
+Hello LePichu!
+Hello LePichu!
+Hello LePichu!
+```
+
+But what happens if we pass no parameter?
+
+```shell
+$> deno run --allow-env --allow-read .\my_silly_wasm_cli.ts
+error: the following required arguments were not provided:
+  --name <NAME>
+
+Usage: My Silly WASM CLI --name <NAME>
+
+For more information, try '--help'.
+NativeCommandExitException: Program "deno.exe" ended with non-zero exit code: 2.
+```
+
+Right, but it works in the end. But what about other runtimes and other methods to ship it in a truly single file? Let's take a look!
+
+# ⎡ The World ⎦ Time flows again!
+This time, we will use [Wasmtime](https://wasmtime.dev), a popular WASM/WASI runtime made by very cool people who also make Cranelift, a compiler toolchain like LLVM. Unlike Deno, Wasmtime passes the file name as `$arg0` and `clap` works with that.
+
+```shell
+$> wasmtime run .\target\wasm32-wasi\release\my_silly_wasm_cli.wasm -- -n "Meow" -c 5
+Hello Meow
+Hello Meow
+Hello Meow
+Hello Meow
+Hello Meow
+```
+
+Now that we know it works on multiple runtimes, let's discuss other things like how we can truly bundle it into one file, what are the advantages and disadvantages to the WASM approach, and more.
+
+# Faster, Higher, Stronger - Together
+WASM is good, but we can go further and beyond. That sentence has layers to it, let's unpack 'em!
+
+## Smaller Binary Sizes
+> *"The power of the sun…in the palm of my hand."* <br/><br/>
+> \- **Dr. Otto Octavius**, formerly known as **"Doc Ock"**
+
+There are many tools which do this, [`wasm-opt` from The Binaryen Project](https://github.com/WebAssembly/binaryen/) is a popular option for minifying and optimizing WASM Code ahead of time, it can be used with any WASM file. We can also offload a lot of heavy lifting to the language's compiler, in the case of Rust; enabling LTO with `opt-level` as `z` could help. If you like living on the edge, there is also the [`wasm-snip`](https://github.com/rustwasm/wasm-snip) tool, which essentially checks if a function is called somewhere during compile time, if not, it replaces the body with an unreachable.
+
+## Singular Bundles: The Formation of Singularity
+To *actually* ship a single file for CLI, we can leverage bundling from [`esbuild`](https://esbuild.github.io), which is a popular and modern build tool with capabilities for bundling, minifying, and more in an extremely fast package. `esbuild` allows us to also inline files to some extent, this includes WASM files.
+
+For our purposes, we need to make some adjustments to our current code and make a build-script, as `esbuild` does not natively support HTTP URLs like Deno or Node as of current date.
+
+```ts
+import { build, BuildResult, PluginBuild } from "esbuild"
+import { httpImports } from "esbuild_plugin_http_imports"
+
+const prod = Deno.args.includes("--prod")
+
+await build({
+	entryPoints: [
+		"my_silly_wasm_cli.ts",
+	],
+	bundle: true,
+	loader: {
+		".wasm": "binary",
+	},
+	format: "esm",
+	outfile: "bin/my_silly_wasm_cli_bundle.js",
+	plugins: [
+		{
+			"name": "exit-on-build",
+			"setup": (build: PluginBuild) => {
+				build.onEnd((result: BuildResult) => {
+					Deno.exit(result.errors.length)
+				})
+			},
+		},
+		httpImports()
+	],
+    minify: prod,
+    treeShaking: prod
+})
+```
+
+This is a tiny build script that should in theory, bundle all of your code, including HTTP Imports and your WASM as an `UInt8Array`. The bundle size will be huge but can be minified and tree-shaken to lower file size. Out of the gate, the binary weighs at `3.4MB`, Unfortunately, even with optimizations put into place, in our case at least the size stays the same. A closer look with PowerShell reveals the difference is in mere bytes at best, `3458892` bytes with no optimizations, and `3409987` with optimizations, the difference is effectively negligible.
+
+And besides, that we need to make a tiny alteration to our own code, which is to import the WASM binary as a default import, and getting rid of `WebAssembly.instantiateStreaming(fetch(...), { ...options })` in favor of `WebAssembly.instantiate(bin, { ...options })`; resulting in this code:
+
+```ts
+// @ts-ignore "As Deno does not like dealing with non JS(X) files, a simple ignore lint rule is enough for our case."
+import bin from "./target/wasm32-wasi/release/my_silly_wasm_cli.wasm"
+import Context from "https://deno.land/std@0.190.0/wasi/snapshot_preview1.ts"
+
+const env = Deno.env.toObject()
+env["CLICOLOR_FORCE"] = Deno.noColor ? "0" : "1"
+
+const context = new Context({
+	args: ["My Silly WASM CLI", ...Deno.args],
+	env,
+})
+
+const instance = await WebAssembly.instantiate(
+	bin,
+	{
+		"wasi_snapshot_preview1": context.exports,
+	},
+)
+
+context.start(instance.instance)
+```
+
+Oh, you also might be wondering why this feels different from the example linked at the very beginning, why are we overriding this environment variable? You will get to know about that at the end of the article.
+
+Alternatively, you can go even go as far as running `deno compile` over it, then use something like `rc.exe` from Windows SDK to modify the metadata to your needs, but that defeats the purpose of compiling to WASM to begin with.
+
+## FFI: The Phantom Zone
+Fortunately, after several hours of digging and going back with friends like [Skye](https://github.com/MierenManz) and [Blackfur](https://github.com/DasBlackfur), I was able to find a way to allow calling functions from JS in WASM or rather the Rust side of things, it is as easy as this:
+```rust
+pub mod my_syscalls_lib {
+	#[link(wasm_import_module = "my_syscalls_lib")]
+	extern "C" {
+		pub fn custom_call() -> i32;
+	}
+}
+```
+
+After that, we just need to define the syscall on the JS side of thing in our own namespace, at the time of writing, the Deno Standard Library WASI-Runner *does NOT* export the `syscall()` function, however, a syscall is just a simple function which will return a "code" at the end as a way to symbolize success or failure.
+
+```ts
+const instance = await WebAssembly.instantiate(
+	bin,
+	{
+		"wasi_snapshot_preview1": context.exports,
+		"my_syscalls_lib": {
+			"custom_call": () => {
+				console.log("Hello from custom call!")
+				return 0
+			}
+		}
+	},
+)
+```
+
+Yep, 'tis that easy to define a custom syscall for WASM! That is the beauty of it, or the newer web in general, stuff is so nice and easy to work with! You might be wondering what returning 0 means, well, if you haven't done C or similar before, the short answer is that returning a 0 means "success", anything non-zero means "failure".
+
+# The Good, The Bad, The Ugly
+While there are advantages to using a sandboxed environment like WASM, there are a lot of *"gotchas"* and other things that may make it unfit for you.
+
+WASI does not support niche cases like TTY Color Outputs (or ANSI Escape Codes) for formatting in Terminals, this can be fixed on JS Runtimes like Deno as they allow you can call JS Methods from WASI like demonstrated above or by simply setting the Environment Variable `CLICOLOR_FORCE` to 1 to make it not filter ANSI Color Codes and force the rendering in full color. Similarly, anything related to TUI or TTY Manipulation does not work and will fail under WASM by default, unless you once again, are okay with binding more host functions. It is still early for WASI however the specification is constantly evolving, newer ideas are being discussed, it is flourishing unlike a lot of other communities.
+
+WASM is very excellent at sandboxing however, and limiting host access. Security get's a massive boost and it's very easy to ship software faster, as you only need to target one platform while the runtimes take care of the heavy-lifting. Earlier attempts like Java and C# failed at adoption for consumer-ware because they were not low-level or bare-bones enough like WASM. We are approaching a newer dawn of tech with WASM, refined and reworked. Either way, WASI is constantly changing, and with Preview 2 on the horizon, a lot of things have breaking changes as WASI is not a "Web Standard" in the traditional sense, it is more or so an experiment like a lot of experimental JS Features, it has the freedom to freely make breaking changes, but a lot of those changes are well deserved and stem from critical criticisms.
+
+# Change the World, My Final Message
+Lastly, I would like to thank everyone who helped with this article. While this is a Rust-oriented write-up, practically it can be applied to *ANY* language which supports compiling to WASM, or rather WASI as a target. Like always, the source code for this is available on my GitHub, at [LePichu/My-Silly-WASM-CLI](https://github.com/LePichu/My-Silly-WASM-CLI). A Part 2 of this article is planned, which will go in-depth more and will also showcase a properly built CLI featuring real world scenarios. I hope this article helped you with something, I hope you use this knowledge going forward to do something, making good software, making software that helps people, developer or not.

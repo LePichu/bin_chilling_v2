@@ -1,0 +1,49 @@
+supporters: {
+  "discord": [
+    "pupgirlf"
+  ]
+}
+authors_db:
+  - name: "LePichu"
+    pfp: "https://cdn.discordapp.com/attachments/736493162117464084/1117290929330589766/icon.png"
+    desc: "
+      Local Dinosaur Enthusiast, working on
+      Raptor Tools and Educational Content related
+      to Rust, Deno, and more. Also reviews newer
+      programming languages and occasionally covers video games.
+    "
+    pronouns: ""
+  - name: "pluiedev"
+    pfp: "https://cdn.discordapp.com/attachments/1077976086228504736/1114717008207024178/everyones_beloved_fag.png"
+    desc: "
+      Local Squishy Chinese Homosexual Rustacean working on
+      being gay and doing crimes. Also a Cat Girl. Works
+      on Cursed things in the Rust Programming Language.
+    "
+    pronouns: "she/her"
+  - name: "FelipeBdC"
+    pfp: "https://avatars.githubusercontent.com/u/35203518?v=4"
+    desc: "
+      Founder of 12gauged, Game Developer/Designer,
+      Aspiring Godot Crackhead, Potato Consumer, and more.
+      Creator of titles: Carnivore & Heads-on (unreleased).
+    "
+    pronouns: "he/him"
+  - name: "racemus"
+    pfp: "https://cdn.discordapp.com/avatars/554053133211533313/1d927d381a56bbc27e40b69ad5c12766.webp?size=80"
+    desc: "
+      Kitty Cat that uses BEAM.
+    "
+    pronouns: "they/them"
+  - name: "uku"
+    pfp: "https://cdn.discordapp.com/attachments/1077976086228504736/1116086310986338434/wifeeeee.png"
+    desc: "
+      Minecraft Modder working on Client Side QoL. Also works on wgpu-mc, and is a Rustacean.
+    "
+    pronouns: "she/her"
+  - name: "Bubbles"
+    pfp: "https://cdn.discordapp.com/avatars/708544768342229012/f0f2e6ba45cbe926e638fc517d646f55.webp?size=480"
+    desc: "
+      Deno/Rust/WASM Nerd, reverse engineered internal V8 format. Creator of deno_ffmpeg.
+    "
+    pronouns: "she/her"

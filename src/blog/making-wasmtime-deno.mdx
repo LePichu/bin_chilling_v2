@@ -13,4 +13,9 @@ publish: "16th June 2023"
 time: "17.2 Minutes"
 ---
 
-A Few days ago, I published an article called [Portable CLIs with Rust and WebAssembly](https://lepichudoes.deno.dev/blog/portable-clis-with-rust/), which was a tiny introduction to using WASM and WASI for CLI Applications powered by Rust. 
+A Few days ago, I published an article called [Portable CLIs with Rust and WebAssembly](https://lepichudoes.deno.dev/blog/portable-clis-with-rust/), which was a tiny introduction to using WASM and WASI for CLI Applications powered by Rust. At the end, I mentioned how WASM has its perks and what-nots but I also some *"gotchas"*, I forgot to mention that Deno's implementation of WASI is very incomplete and that it does not support a lot of basic things like `std::thread::sleep`. I also mentioned that a sequel of said blog post will come which will show me leveraging a good chunk of Rust Crates to build a real-world example of a CLI with complex functions, but to do that we either need to rebuild the WASM execution context in Rust via [Wasmtime](https://wasmtime.dev) or we could alternatively bind Wasmtime to Deno and not do double Rust building, for well, obvious reasons. This isn't the sequel to that article, it is a tiny filler episode if you will, going into detail how I got Wasmtime binded to Deno and made it a drop-in replacement for the Standard Library WASI Runner.
+
+# I don't like Wasmer, it's course and rough and irritating, and it gets everywhere
+
+
+# It's WASM-in' Time!

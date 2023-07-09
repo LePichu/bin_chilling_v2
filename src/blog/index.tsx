@@ -49,7 +49,11 @@ export default function () {
 
     const private_posts: Array<string> = [
         "codm-br-identity-crisis",
-        "crystal-review"
+        "crystal-review",
+		"framework-modernity",
+		"making-wasmtime-deno",
+		"objective-shell-comparison",
+		"sniper-challenge-cheatcode"
     ]
 
     private_posts.forEach((post) => {

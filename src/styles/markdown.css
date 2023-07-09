@@ -73,6 +73,10 @@ blockquote {
     border-radius: 0.5rem;
 }
 
+.hljs::-webkit-scrollbar {
+    height: 0px;
+}
+
 .hljs>* {
     font-family: "Fira Code", monospace;
 }

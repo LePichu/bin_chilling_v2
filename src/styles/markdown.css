@@ -28,6 +28,10 @@
     opacity: 0.5;
 }
 
+#blog-content>p {
+    line-height: 1.75rem;
+}
+
 #blog-content>p:first-of-type {
     margin-top: 1.75rem;
 }

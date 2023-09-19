@@ -36,6 +36,10 @@
     content: "@";
 }
 
+#blog-content p {
+    line-height: 1.5rem;
+}
+
 p>code,
 a>code {
     display: inline-block;
@@ -43,9 +47,10 @@ a>code {
     background-color: rgb(230, 230, 230);
     color: #4FB4D7;
     border: 1px solid grey;
-    padding: 0rem 0.25rem;
+    padding: 0.35rem 0.25rem;
     margin: 0rem 0.25rem;
     border-radius: 0.25rem;
+    line-height: 0.5rem;
     font-family: "Fira Code", monospace;
 }
 
@@ -62,7 +67,17 @@ blockquote {
     padding: 1rem;
     background-color: rgb(238, 238, 238);
     border-left: 5px solid black;
-    text-align: center;
+    font-family: "IBM Plex Serif";
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+blockquote p:first-of-type {
+    text-align: left;
+}
+
+blockquote p:nth-of-type(2) {
+    text-align: right;
 }
 
 .hljs {

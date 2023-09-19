@@ -13,10 +13,10 @@ export type SupporterData = {
 export interface Data {
 	children: Element
 	meta: {
-		title: string | undefined
-		description: string | undefined
-		image: string | undefined
-		theme: string | undefined
+		title?: string
+		description?: string
+		image?: string
+		theme?: string
 	}
 	blog: boolean
 	authors_db: Array<AuthorInfo>
@@ -24,4 +24,14 @@ export interface Data {
 	publish: string
 	time: string
 	supporters: SupporterData
+}
+
+export interface SpecLabsData {
+	home: boolean
+	children: Element
+	meta: {
+		title?: string
+		description?: string
+	}
+	url?: string
 }

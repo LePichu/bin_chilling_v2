@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+@tailwind utilities;
+
+@keyframes fade {
+    from {
+        fill-opacity: 0.5;
+    }
+
+    to {
+        fill-opacity: 1;
+    }
+}
+
+@keyframes fade-reverse {
+    from {
+        fill-opacity: 1;
+    }
+
+    to {
+        fill-opacity: 0.5;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0;
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+    scroll-margin-block-start: 1rem;
+}
+
+body {
+    font-family: "IBM Plex Sans", serif;
+}
+
+.specsheet {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.specsheet>* {
+    margin: 0;
+}
+
+.specsheet > h1:first-of-type {
+    text-align: center;
+    margin: 2rem 0rem;
+}
+
+.specsheet > h2 {
+    margin-bottom: -1.5rem;
+}
+
+p {
+    line-height: 1.75rem;
+}
+
+img {
+    margin: auto;
+    max-width: 100%;
+    border-radius: 0.5rem;
+}
+
+svg[id="icon"] {
+    fill: white;
+    fill-opacity: 0.5;
+    animation: 250ms fade-reverse ease-in-out forwards;
+}
+
+svg[id="icon"]:hover {
+    animation: 250ms fade ease-in-out forwards;
+}
+
+ul {
+    padding-left: 1.25rem;
+}
+
+ul a {
+    color: #414DC9;
+    text-decoration: none;
+    text-underline-offset: 2px;
+}
+
+ul a {
+    color: #414DC9;
+}
+
+ul a:hover {
+    text-decoration: underline;
+}
+
+code {
+    padding: 0.25rem 0.5rem;
+    background-color: #dbdbdb;
+    border-radius: 0.5rem;
+}

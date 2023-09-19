@@ -1,0 +1,54 @@
+---
+layout: speclabs.tsx
+meta:
+    title: "RaptorRT"
+    description: "RaptorRT Gaming."
+---
+![RaptorRT Banner](https://media.discordapp.net/attachments/1150513736633827490/1153383956901793943/raptort-rt-banner-slim.png)
+# RaptorRT - A New Vision for Server-side JavaScript
+
+- Table of Contents:
+	- [What is RaptorRT?](#what-is-raptorrt)
+	- [Why?](#why)
+	- [Prior Art and Why not \<X> Runtime?](#prior-art-and-why-not-x-runtime)
+	- [Goals, Non-Goals, Explicit Anti-Goals](#goals-non-goals-explicit-anti-goals)
+	- [Future of Raptor Tools](#future-of-raptor-tools)
+	- [Project "Dart" (Edge Platform)](#project-dart-edge-platform)
+
+## What is RaptorRT?
+RaptorRT is a collaborative effort that sprung a while back into life at ReMod Software as a plan to create the next major Server-sided JavaScript runtime which would truly emphasize the focus on UX/DX, Web Standards Compliance, and how we think about JavaScript performance and concurrency as a whole. It will use the Mozilla's SpiderMonkey JavaScript engine as opposed to Google's V8 or Apple's JavaScriptCore for more customizability and other reasons. 
+
+## Why?
+To understand, "why?", we need to go back in time, a long while ago. It all started with Node.js, then Deno, and then Bun. 
+
+## Prior Art and Why not \<X> Runtime?
+Meow.
+
+## Goals, Non-Goals, Explicit Anti-Goals
+We have a set of goals we want to fulfill at all costs, somethings that are nice but not needed, and some very explicit things to NOT do. 
+
+What we are 100% going for:
+- Web Standards Compliance, Top to Bottom, unless Tiny Tweaks can better adjust said API to fit in a server context
+- BEAM-like Concurrency, Web Workers implemented as Green Threads
+- Adapt existing Web APIs for handling File System and similar alongside the Permissions Model of the Browser for the server, strengthening Web Compatibility
+- Adapt `manifest.json` to fit a server context, whilst reviving the `service_worker` field and a new `import_map` field
+- Every JS loaded into the runtime has a location representation URL over a protocol like `file://` or `https://` 
+- Support Meta-programming any JS Subset/Flavors or entirely different languages via Service Workers
+- One Configuration File to rule them all, whilst having a set of sane/opinionated defaults for tooling
+- Follow Deno's original goal of all tools in one binary, including `ast`, `lint`, `init` (with options) subcommands, custom sub-commands in the core CLI, a proper `bundle` in one way or another, etc.
+
+What we would find nice to have but not necessary:
+- Adapt Web APIs like WebRTC, WebTransport, WebGPU, etc. that might not have a traditional/mainstream use
+- Future JS Syntax/Features behind Experimental Toggles
+- Future JS APIs like ES Compartments, Shadow Realms, and more behind Experimental Toggles
+- Server-Sided DOM or CSSOM built-in, there are considerations to be made here
+
+What we are absolutely against:
+- Any form of Node/Deno or alternative runtime shim/compatibility as a first party
+- Ignoring Community Feedback / Not having Community Transparency
+- Faking Benchmarks or any form of False Advertising 
+## Future of Raptor Tools
+Meow?
+
+## Project "Dart" (Edge Platform)
+Meow!

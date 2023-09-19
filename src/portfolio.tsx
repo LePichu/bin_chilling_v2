@@ -104,7 +104,7 @@ export default function () {
 					ecosystems.
 				</p>
 
-				<h1 class="m-0 md:text-3xl">Raptor Tools</h1>
+				<h1 class="m-0 md:text-2xl">Raptor Tools</h1>
 				<p class="md:text-xl m-0 mt-2">
 					Raptor Tools is a toolchain for building apps with the Deno
 					Runtime for JavaScript, providing a GUI Framework, CLI

@@ -7,7 +7,6 @@ import HeadingsSlug from "npm:rehype-slug"
 import AutolinksHeadings from "npm:rehype-autolink-headings"
 import tailwindcss from "lume/plugins/tailwindcss.ts"
 import postcss from "lume/plugins/postcss.ts"
-import { h } from "https://esm.sh/v117/preact@10.11.0/"
 
 const site = lume({
 	src: "./src",
@@ -20,20 +19,20 @@ const plugins = [
 	jsx_preact(),
 	mdx({
 		rehypePlugins: [HeadingsSlug, AutolinksHeadings],
-		components: {
-			a: ({ ...props }) => {
-				if (props.tabIndex == "-1") {
-					props.target = "_self"
-				} else {
-					props.target = "_blank"
-				}
+		// components: {
+		// 	a: ({ ...props }) => {
+		// 		if (props.tabIndex == "-1") {
+		// 			props.target = "_self"
+		// 		} else {
+		// 			props.target = "_blank"
+		// 		}
 
-				return h("a", {
-					...props,
-					className: "text-blue-500 hover:underline",
-				})
-			},
-		},
+		// 		return h("a", {
+		// 			...props,
+		// 			className: "text-blue-500 hover:underline",
+		// 		})
+		// 	},
+		// },
 	}),
 	esbuild(),
 	codeHighlight(),
@@ -44,6 +43,24 @@ const plugins = [
 ]
 
 plugins.forEach((plugin) => site.use(plugin))
+
+site.process([".mdx"], (page) => {
+	if (page.src.path.startsWith("/blog/")) {
+		page.document?.body?.querySelectorAll("a").forEach(
+			(el) => {
+				if (
+					// @ts-ignore ""
+					el.getAttribute("tabindex") == "-1"
+				) { // @ts-ignore ""
+					el.setAttribute("target", "_self")
+				} else {
+					// @ts-ignore ""
+					el.setAttribute("target", "_blank")
+				}
+			},
+		)
+	}
+})
 
 site.copy("assets")
 site.copy("server.ts")

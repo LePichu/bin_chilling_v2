@@ -3,7 +3,7 @@ layout: main.tsx
 meta:
     title: "Portable CLIs with Rust and WebAssembly"
     description: "A write-up on making portable CLIs with Rust and WASM."
-    image: "https://lepichudoes.deno.dev/assets/posts/portable_clis_with_rust.png"
+    image: "/assets/posts/portable_clis_with_rust.png"
     theme: "#095922"
 blog: true
 authors: [
@@ -141,7 +141,8 @@ Now that we know it works on multiple runtimes, let's discuss other things like 
 WASM is good, but we can go further and beyond. That sentence has layers to it, let's unpack 'em!
 
 ## Smaller Binary Sizes
-> *"The power of the sun…in the palm of my hand."* <br/><br/>
+> *"The power of the sun…in the palm of my hand."*
+> 
 > \- **Dr. Otto Octavius**, formerly known as **"Doc Ock"**
 
 There are many tools which do this, [`wasm-opt` from The Binaryen Project](https://github.com/WebAssembly/binaryen/) is a popular option for minifying and optimizing WASM Code ahead of time, it can be used with any WASM file. We can also offload a lot of heavy lifting to the language's compiler, in the case of Rust; enabling LTO with `opt-level` as `z` could help. If you like living on the edge, there is also the [`wasm-snip`](https://github.com/rustwasm/wasm-snip) tool, which essentially checks if a function is called somewhere during compile time, if not, it replaces the body with an unreachable.

@@ -10,6 +10,8 @@ const Meta = (props: Props) => {
 	const title = `ReMod SpecLabs | ${props.meta.title}` ??
 		"ReMod SpecLabs | Home"
 	const description = props.meta.description ?? "LePichu | Website"
+	const image = props.meta.image ?? "/assets/speclabs_meta.png"
+	const theme = props.meta.theme ?? "#414DC9"
 	const URL = `https://lepichudoes.deno.dev/speclabs/`
 
 	return (
@@ -42,9 +44,9 @@ const Meta = (props: Props) => {
 				property="og:description"
 				content={description}
 			/>
-			<meta property="og:image" content="/assets/speclabs_meta.png" />
+			<meta property="og:image" content={image} />
 
-			<meta name="theme-color" content="#414DC9" />
+			<meta name="theme-color" content={theme} />
 
 			<meta name="twitter:card" content="summary_large_image" />
 			<meta property="twitter:domain" content="lepichudoes.deno.dev" />
@@ -59,7 +61,7 @@ const Meta = (props: Props) => {
 			/>
 			<meta
 				name="twitter:image"
-				content="/assets/speclabs_meta.png"
+				content={image}
 			/>
 		</>
 	)

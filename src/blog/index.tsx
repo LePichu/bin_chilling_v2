@@ -53,7 +53,9 @@ export default function () {
 		"framework-modernity",
 		"making-wasmtime-deno",
 		"objective-shell-comparison",
-		"sniper-challenge-cheatcode"
+		"sniper-challenge-cheatcode",
+		"swiss-army-knife-dev-phone",
+		"clis-as-blueprints"
     ]
 
     private_posts.forEach((post) => {

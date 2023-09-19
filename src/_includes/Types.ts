@@ -32,6 +32,8 @@ export interface SpecLabsData {
 	meta: {
 		title?: string
 		description?: string
+		image?: string
+		theme?: string
 	}
 	url?: string
 }

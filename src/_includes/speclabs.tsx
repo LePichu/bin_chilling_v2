@@ -7,9 +7,8 @@ const Socials = {
 }
 
 const Meta = (props: Props) => {
-	const title = `ReMod SpecLabs | ${props.meta.title}` ??
-		"ReMod SpecLabs | Home"
-	const description = props.meta.description ?? "LePichu | Website"
+	const title = props.meta.title ? `ReMod SpecLabs | ${props.meta.title}` : "ReMod SpecLabs | Home"
+	const description = props.meta.description ?? "ReMod SpecLabs | Website"
 	const image = props.meta.image ?? "/assets/speclabs_meta.png"
 	const theme = props.meta.theme ?? "#414DC9"
 	const URL = `https://lepichudoes.deno.dev/speclabs/`

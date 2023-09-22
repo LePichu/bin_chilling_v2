@@ -1,10 +1,11 @@
 ---
 layout: speclabs.tsx
-meta:
-    title: "RaptorRT"
-    description: "RaptorRT Gaming."
-	image: "https://media.discordapp.net/attachments/1150513736633827490/1153383956901793943/raptort-rt-banner-slim.png"
+meta: {
+    title: "RaptorRT",
+    description: "RaptorRT Gaming.",
+	image: "https://media.discordapp.net/attachments/1150513736633827490/1153383956901793943/raptort-rt-banner-slim.png",
 	theme: "#FFFFFF"
+}
 ---
 ![RaptorRT Banner](https://media.discordapp.net/attachments/1150513736633827490/1153383956901793943/raptort-rt-banner-slim.png)
 # RaptorRT - A New Vision for Server-side JavaScript
@@ -21,7 +22,13 @@ meta:
 RaptorRT is a collaborative effort that sprung a while back into life at ReMod Software as a plan to create the next major Server-sided JavaScript runtime which would truly emphasize the focus on UX/DX, Web Standards Compliance, and how we think about JavaScript performance and concurrency as a whole. It will use the Mozilla's SpiderMonkey JavaScript engine as opposed to Google's V8 or Apple's JavaScriptCore for more customizability and other reasons.
 
 ## Why?
-To understand, "why?", we need to go back in time, a long while ago. It all started with Node.js, then Deno, and then Bun.
+To understand, "why?", we need to go back in time, a long while ago. It all started with Node.js, then Deno, and then Bun. 
+
+In 2009, Ryan Dahl unveiled "Node.js", which for the years to come by would completely revolutionize how server-side code or JavaScript in general would be written, spawning its own ecosystem and standards, one of which was CommonJS, one of the first module systems in JavaScript history which became popular. Node.js alongside npm, would become a common development environment for the years to come, but there was a catch, CommonJS didn't run in the browser, matter of fact no module system did until 2015 unless we consider things like build tools or libraries which did the task of implementing a module system. As the years went by, JavaScript evolved, especially starting in 2015, with the introduction of native ES Modules, classes, and much more, Node.js initially had a rough start to support this in favor of CommonJS and still to this day does, not to mention TypeScript makes it harder because of needing to build said TypeScript. Dahl left Node.js and npm around 2013-2014 to focus on other things, he'd eventually pick up GoLang, but his love for JavaScript never died. In 2018, as JSConf EU, Dahl would give a talk on his regrets when making Node.js, and would announce his new project, which would turn out to be Deno.
+
+Deno was an idea, an idea of simplifying server-sided JavaScript development, with a lot of promise, especially with a sandbox/security model, built in TypeScript, tooling in one binary, URL Imports, and other Web API Compatibility. Originally written in Go, then rewritten in Rust, Deno aimed at simplifying web development, no matter who you are, and honestly to some extent, it worked, it was nice. But the cracks in Deno's design would eventually show. Deno's philosophy included something called "buildless", which contrary to what the name suggests, was the opposite, one of the synonyms for the term was "Built JIT", which made far more sense. The bottom line was that the building process should be extremely fast, similar to things like [swc](https://swc.rs) or [Vite](https://vitejs.dev), and should be abstracted away by default with no configuration required. Deno at launch had absolutely no framework, clean slate with nothing, to this day there are only 2-3 options available at most. One of which includes [Lume](https://lume.land), a static-site generator, and Fresh, which is Deno's official Full-stack "Meta"-Framework which for a majority of its lifetime was absolutely garbage at and borderline unusable, it is fine in comparison to frameworks over on Node now but is still lacking in places. Over the years, that would began to fail, and just like Node.js, projects would require their own build script in a lot of cases, except the developer experience would be sub-par compared to Node.js, as it still had Vite, which stayed true to its goals. What Deno really did give us a glimpse into was sharing Web APIs with the server, and how nicer it can get. Deno would also push for performance when Bun would drop out of nowhere with cherrypicked and faked performance benchmarks. 
+
+Bun was originally started a project on making JavaScript/TypeScript compilation or bundling go faster, faster than the alternatives ever could, however, a victim of feature creep and it ended up booming into it's own runtime, backed by venture capital and sharing the same fate as Deno, its just a nice thing except this time it has zero innovation, and absolutely regresses in most aspects compared to Node.js, not to mention it straight up runs Node.js and only spins its own runtime up when you pass the `==bun` flag when invoking the CLI. Bun's story is similar to Yarn's, we have learned absolutely nothing from when Yarn happened.
 
 ## Prior Art and Why not \<X> Runtime?
 Meow.

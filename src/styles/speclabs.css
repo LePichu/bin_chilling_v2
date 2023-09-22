@@ -55,7 +55,7 @@ body {
     margin-bottom: -1.5rem;
 }
 
-p {
+p, li {
     line-height: 1.75rem;
 }
 
@@ -91,6 +91,10 @@ ul a {
 
 ul a:hover {
     text-decoration: underline;
+}
+
+li {
+    margin-block: 0.25rem;
 }
 
 code {

@@ -69,7 +69,7 @@ export default function () {
 
 	return (
 		<>
-			<section class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
+			<section class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
 				{postsData.map((post) => {
 					return (
 						<div class="flex flex-col gap-4 p-6 rounded-2xl border-solid border-gray-400 border-2">

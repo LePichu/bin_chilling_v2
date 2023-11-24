@@ -50,7 +50,7 @@ site.process([".mdx"], (page) => {
 			(el) => {
 				if (
 					// @ts-ignore ""
-					el.getAttribute("tabindex") == "-1"
+					el.getAttribute("tabindex") == "-1" || ["/", "/blog", "/portfolio"].includes(el.getAttribute("href"))
 				) { // @ts-ignore ""
 					el.setAttribute("target", "_self")
 				} else {

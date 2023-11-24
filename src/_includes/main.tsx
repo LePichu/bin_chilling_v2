@@ -197,8 +197,8 @@ export default function Layout(props: Props) {
 		<>
 			<html lang="en">
 				<head>
+					<Meta {...props} />
 				</head>
-				<Meta {...props} />
 				<body>
 					<Header />
 					<main

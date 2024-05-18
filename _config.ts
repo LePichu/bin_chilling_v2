@@ -7,6 +7,7 @@ import HeadingsSlug from "npm:rehype-slug"
 import AutolinksHeadings from "npm:rehype-autolink-headings"
 import tailwindcss from "lume/plugins/tailwindcss.ts"
 import postcss from "lume/plugins/postcss.ts"
+import sitemap from "lume/plugins/sitemap.ts"
 
 const site = lume({
 	src: "./src",
@@ -40,6 +41,7 @@ const plugins = [
 		extensions: [".html", ".tsx"],
 	}),
 	postcss(),
+	sitemap(),
 ]
 
 plugins.forEach((plugin) => site.use(plugin))
@@ -50,7 +52,10 @@ site.process([".mdx"], (page) => {
 			(el) => {
 				if (
 					// @ts-ignore ""
-					el.getAttribute("tabindex") == "-1" || ["/", "/blog", "/portfolio"].includes(el.getAttribute("href"))
+					el.getAttribute("tabindex") == "-1" ||
+					["/", "/blog", "/portfolio", "#blog-footer"].includes(
+						el.getAttribute("href"),
+					)
 				) { // @ts-ignore ""
 					el.setAttribute("target", "_self")
 				} else {

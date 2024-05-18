@@ -52,7 +52,8 @@ const RAPTOR_TOOLS: Array<Project> = [
 		name: "RaptorFX",
 		description:
 			"A GUI Framework Powered by Web Technologies and Standards, built on top of WebViews and the Deno Runtime.",
-		image: "https://cdn.discordapp.com/attachments/736493162117464084/1117187600453746769/raptorfx_banner.png",
+		image:
+			"https://cdn.discordapp.com/attachments/736493162117464084/1117187600453746769/raptorfx_banner.png",
 		link: "https://raptorfx.deno.dev/",
 	},
 	// {
@@ -87,7 +88,8 @@ const COMMISSIONS: Array<Project> = [
 		name: "QuickStay",
 		description:
 			"QuickStay Rooms is an online service dedicated to finding PGs for students and alike.",
-		image: "https://cdn.discordapp.com/attachments/736493162117464084/1117176059285213254/quickstay_material.png",
+		image:
+			"https://cdn.discordapp.com/attachments/736493162117464084/1117176059285213254/quickstay_material.png",
 		link: "https://quickstayrooms.com/",
 	},
 ]

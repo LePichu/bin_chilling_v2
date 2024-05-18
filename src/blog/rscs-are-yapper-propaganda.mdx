@@ -1,0 +1,272 @@
+---
+layout: main.tsx
+meta:
+  title: RSCs are Yapper Propaganda 
+  description: Fuck Vercel, All my homies hate Vercel.
+  image: /assets/posts/rsc-yapping.png
+  theme: "#FFFFFF"
+  url: "https://ishankbg.dev/blog/react-server-components-a-bad-idea/"
+blog: true
+authors:
+  - LePichu
+  - IshanKBG
+publish: 17th April 2024
+time: 18.8 Minutes
+---
+
+_**\<inhales>**_ It has been more than 4 years since I started *Web Dev* and to this **React** was a very specific *"ick"* for me, everything about it felt... Off in some way, and this was before me discovering **Preact**, **Solid**, **Vue**, many more frameworks, and how cleaner their patterns were. *Signals, **SFCs**, and many other things* were one of the several things which set them apart as _"**React** Alternatives"_, and **_really_ good** ones, so much so I could probably devolve this article into why you should stop using **React** as a whole, and maybe I will. As of Recent, but by recent I mean like, maybe 2-3~ years??? **React** has focused an emphasis on what they dub "***React Server Components**"*, now, on first thought you may have the following responses:
+
+- _"Huh, I wonder how different this is from Server Rendering solutions from **Next.js** and **Remix**."_
+- _"... Why is **React**, a client-side UI rendering library, looking into something that only occurs on a server?"_
+- _"Do they enhance how server rendering works right now? What is this? Is this on top of existing server rendering?"_
+- _"Is this a really out of place April Fools' joke?"_
+
+If you thought any of that, and are sane, you'd very disappointed to hear that ***React** just threw away everything that made it decent*, and just took the worst ways of going about creating "Server Components", and essentially, reinvented **PHP** but even more bare bones. What do I mean by this? To answer that question, it runs very deep. Today, *some idiot* just wrote an article on why you should start using *"Server Components"* in _all your projects_ and reading it really cemented in how asinine the crowd it is for, and the technology itself is. If you are interested in reading that original bit, it's [linked here](https://itnext.io/its-2024-you-should-be-using-react-server-components-already-6cb24a7140a1). But I suppose we really need to get into the *knitty-gritty* of this thing from the start, well supposedly explaining where my hatred for a lot of things stem from.
+
+# A Brief History of React, JSX, and Server Components
+
+It was 2011, **Angular.js** and **Backbone** were still relatively fresh at the time, but **Facebook** was cooking up their own alternative internally for their own usage, they probably didn't predicate how their little project would impact a good chunk of web development history going forward. Don't remember if **React** (as in the **JavaScript** Library) or **React Native** was the internal result of a hackathon, but one of them was. **React** was initially presented as a *"lighter"* approach of client-side reactive UI components. At the time, it really was, a lot of people using **Angular.JS** (not to be confused with **Angular**) really did say and confirm that **React** felt a lot faster. But there was a catch, no one really wanted to write nested function calls, no, that looked way too hideous to deal with, except some people thought the imperative function calls were *"good"* and dissented **JSX** like the plague.
+
+**JSX** was introduced as an extension of the **JavaScript** syntax to help write **React** code better, it has since bloomed into a general grammar specification which is utilised by many in the **JavaScript** ecosystem, primarily by **Solid** and **Preact**, but **Vue** also presents **JSX/TSX** as an option to write **Vue** in (cool side note: **Vue**'s specific **JSX** transform will be updated according to [Evan You](https://twitter.com/youyuxi) himself to accomodate [Vapor Mode](https://github.com/vuejs/core-vapor) once it launches), but internally, also is used by **Svelte** to do typechecking via **TypeScript**. I do personally love **JSX** _very much_ as a templating format, it can turn into symbol soup but it's more related to how **JavaScript** itself functions, but I suppose technically when you have a compiler you could allow for more. And Sure, *"seperation of concerns"* is a thing, but really, think about it, if it really was that big of an issue why do you think we are using _Component Frameworks_ to isolate bits and pieces into one reusable chunk? **SFC** files for example are similar to **JSX** with the same goal but go about it in a very different way. Anywho, moving onto *"Server Components"*.
+
+The term *"Server Components"* is a broad term in web development itself but has been around for a very long time. When thinking of them, a somewhat predictive thought would be thinking about **PHP** and it's frameworks, or even something Ruby on Rails (albeit it being comically a big example of how to not do things), but in context of **JavaScript**, people may think of *Templating Engines* like ***Pug, Liquid, EJS, Handlebars**, so many more*, but generally speaking anything that was a reusable template or component which only rendered to HTML on server and then sent to the client would quality as a server component. So, *where did **React** lie on this spectrum?* **React** could always render it's components to static HTML ahead of time as far my memory goes, at least it could since 2013~. You'd simply call the `renderToString()`(do note: this method call has been deprecated in favour of other APIs) method from `"react-dom/server"` package or call the other methods in the package to render the HTML to a stream or anything else. You might be thinking, then what is the case for **React's** own take on Server Components? To answer that question in one word: **clownery**. So what can they do that client components can't? Simply put the only thing they are about are providing some sort of pre-rendered templates which are *hydrophobic*, not *hydrophobic* as in they water, *hydrophobic* in the sense they literally cannot *"hydrate"* by default compared to normal components rendered on server. **RSCs** also feature a major change, these components can be *"async"*, but normal components cannot be async (until the [`use`](https://react.dev/reference/react/use) hook drops in stable), and this creates a clear divide which causes more friction rather than creating less friction.
+
+# The Next.js Incident
+
+A while back, **Next.js** introduced support for **RSCs** in [v13](https://nextjs.org/blog/next-13) and in all honesty, it went downhill from there. It introduced the App Router, which had a new way of [File System Routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) attached with it. Rather than relying on `<Suspense />` directly in a route to stream the UI, a file named `loading.js` must be created, this not only convoluted the whole thing, but it is an unnecessary system all together when compared to other solutions **Next.js** *"yoinked"* this from. Although it is indeed possible to use `<Suspense />` to stream the UI, **Next.js** opts to promote their *new* File System Routing to achieve the same effect albeit having a lot of negatives attached to said approach of handling of streaming UI over the wire. So that implies you need to do *this*:
+
+```tsx
+export default function Loading() {
+    return <LoadingSkeleton />;
+}
+```
+
+Over something simpler like this:
+
+```tsx
+export default function Route() {
+    return (
+        <Suspense fallback={<LoadingSkeleton />}>
+            <UI />
+        </Suspense>
+    );
+}
+
+```
+
+Another thing that should be mentioned is that **Next.js** actively allows and borderline encourages *"Component Level Data Access"* despite it being not only a bad practice, but a security risk too, as to why; it will become apparent in a bit. To counter that, *Sebastian Markbàge*, a former **Meta** Developer who now works at **Vercel**, has written a [blog post](https://nextjs.org/blog/security-nextjs-server-components-actions) when it comes to handling security within the context of a **Next.js** Application or Web Page.
+
+Server and Client directives introduce noticable overhead for the developer mentally, but also introduce friction between interactions, it is one thing to be simpler and efficient, it is another to badly rip-off something else. At the end of the day, *this* does feel like a wanna-be **PHP** clone with the usage of the `"use server"` directive:
+```tsx
+export function Bookmark(slug) {
+    return (
+        <button
+            formAction={async () => {
+                "use server";
+                await sql`INSERT INTO Bookmarks (slug) VALUES (${slug})`;
+            }}
+        >
+            <BookmarkIcon />
+        </button>
+    );
+}
+
+```
+
+**Next.js** despite advertising to be *"modern"* and *"friendly"* likes to introduce complicated and heinous practices which are the polar opposite, including things like security as mentioned above. A [Tweet](https://twitter.com/tomus_sherman/status/1654211227172716545) by Tom Sherman points out how **Next.js** **RSCs** allow you to easily leak secrets to the client instead of them staying on the server as you'd expect, again; bad design leads to bad practices.
+
+Pardon me, but I am about to go off on an unrelated tangent. Over the past few months, or years even, **Next.js** has focused on releasing fast with more and more breaking changes, instead of slowing down with more quality changes and refinement over time, the buggy-ness of the framework has gone quite up, and the general quality took a nose dive to hell, what used to take a few hundred milliseconds for HMR now takes a solid 1-2 seconds to be accomplished. **Next.js** also seems to be against the **JavaScript** community in a way, trying to split apart and do their own thing for no reason other than *"just because"*, unlike with others finally shaking hands and collaborating with each other and using more and more shared tooling, a popular example would be **Remix** and **Angular** now using **Vite** internally, another would be **Solid** introducing Signals to the **JavaScript** World properly, there's a lot more examples tho, including **UnoCSS** by one of the Vue Developers. 
+
+Another thing that should be accounted for is, the existence of **Turbopack**, my only question is: *Why*?
+
+**Turbopack** has not only done a lot of false advertising by misleading benchmarks, but it has also more or less failed to meet the goal of a *"Rusty Webpack Implementation"*, the community already had a lot of great and really good interconnecting tools, we had reached a point of refinement with our current generation of build systems, a lot of old build systems have really good *almost drop-in* in replacements, such as:
+
+- **Parcel -> Vite** (Not Really but **Vite** is the closest successor to Parcel 1.x besides Parcel 2)
+- **Rollup -> Rolldown** (A Rusty Rewrite of Rollup)
+- **Webpack -> Rspack** (A Rusty Rewrite of Webpack)
+
+> Hey, isn't caching in **Next.js** good like other advertised features?
+
+Contrary to popular belief as usual, no, it is not; rather it is far more than what it should have been. **Next.js** by default caches *everything*, and to not cache means you need to explicitly opt yourself out of caching things, which makes it really easy to shoot yourself in the foot in a lot of cases, and if I really wanted to shoot myself in the foot, why not use **C++** for that instead? This [Tweet](https://x.com/flaviocopes/status/1736317822609887362) by Flavio explains why it's so bad, another thing to note is that there is a GitHub [Discussion](https://github.com/**Vercel**/next.js/discussions/54075) which really explains why this is the way it is; Sad reality, honestly.
+
+# Remix Loaders and Data Fetching
+
+About three years ago, a framework named **Remix** started catching up hype, and rightfully so for a lot of reasons, it had been around for way longer but closed source, they went open source around that time ago and with some really good clear-cut branding that aligned with their goals; Using the existing Web itself to push it forward. Naturally, they introduced web standards based solutions including their built in components and re-exports of **React Router**. One of the many good things about **Remix** were *Data Loaders*, a way to load server data without any leakage to the client, as a React Hook.
+This is a neat way to load data without worrying about separation of concerns.
+Here's how you are going to load data in **Remix**.
+
+```tsx
+export async function loader() {
+  const user = await getUser();
+  //loading data in parallel without creating waterfalls
+  const [notifications, comments, posts] = await Promise.all([
+    getNotifications(user.id),
+    getComments(user.id),
+    getPosts(user.id)
+  ]);
+  
+  return json({
+    notifications,
+    comments,
+    posts
+  });
+}
+
+export async function clientLoader({ request, params, serverLoader }) {
+  const [serverData, clientData] = await Promise.all([
+    serverLoader(),
+    getDataFromClient()
+  ]);
+  
+  return {
+    ...serverData,
+    ...clientData,
+  };
+}
+
+export default function Route() {
+  const data = useLoaderData<typeof loader>();
+  // render your data
+  // ...
+}
+
+```
+
+This not only is simpler to understand and ergonomic in nature, but it also makes sure you aren't leaking anything easily, if at all to the client. You can read more about how **Remix** does *Data Fetching* [here](https://remix.run/docs/en/main/guides/data-loading). **Remix** always keeps your data in sync with your UI. Additionally, instead of putting server-side code in your component to compute form data, you can simply use an API called [Data Actions](https://remix.run/docs/en/main/guides/data-writes), which are both highly secure and really ergonomic to work with.
+
+```tsx
+import { useActionData, redirect } from 'somewhere';
+
+export async function action({ request }) {
+    const body = await request.formData();
+    const bookmark = await createBookmark(body);
+    return redirect(`/bookmark/${bookmark.id}`);
+}
+
+export function CreateBookmark() {
+    const actionData = useActionData<typeof action>();
+
+    return (
+        <form method="post" action="/bookmarks/new">
+            <p>
+                <label>
+                    Name:{" "}
+                    <input
+                        name="name"
+                        type="text"
+                        defaultValue={actionData?.values.name}
+                    />
+                </label>
+            </p>
+            {actionData?.errors.name ? (
+                <p style={{ color: "red" }}>
+                    {actionData.errors.name}
+                </p>
+            ) : null}
+
+            <p>
+                <label>
+                    Description:
+                    <br />
+                    <textarea
+                        name="description"
+                        defaultValue={actionData?.values.description}
+                    />
+                </label>
+            </p>
+            {actionData?.errors.description ? (
+                <p style={{ color: "red" }}>
+                    {actionData.errors.description}
+                </p>
+            ) : null}
+
+            <p>
+                <button type="submit">Create</button>
+            </p>
+        </form>
+    );
+}
+
+```
+
+**Remix**'s approach to Data Modelling and providing APIs for such is far more ergonomic and cleaner than say, **Next.js**' approach to Data Modelling in context of **RSCs**.
+
+# Common Misconceptions and Fanboyism
+
+> "**React Server Components** have zero-bundle cost."
+
+A common misconception that is seen across **Vercel** Glazers is that they think they are getting free performance by using Server Components, this however, is not true, quite the contrary in reality. **RSCs** render on the server, and still need to be sent over wire with their own bundle cost, in case of **Next.js**, it has shown to often remain the same or slightly decreased bundle size rather than decrease or be *zero* as advertised, another is runtime performance; **RSCs** do _"hydrate"_ if you put a _client-directive_ in them, which defeats the point of having **RSCs** in the first place, to have fully server-only rendered bits of UI. The popular form example where **RSCs** were first demo'd with the _server-directive_ do actually _hydrate_ and attach dynamic behaviour to the client-side DOM.
+
+> What about **Redwood.js**?
+
+Same shit; Different Disc. Redwood copies **Next.js** **RSCs** word for word; bar for bar. Same plague, different realm. It's an understandably safe play but a disappointing one none-the-less.
+
+> What about **Vercel**'s design? Why do you hate it to so much?
+
+Like I said, it introduces more friction and fucks with both UX and DX, which is why I hate it, and as I talk about how others handle it better in the next section, it will start to become far more clear.
+
+Just because **Vercel** is very oriented on vendor lock-in and making money off of it, and once bought a renaissance to the server-rendering space, doesn't mean all their decisions are good or valid, they're driven by money like most other companies rather than building a good product at this point and it has been reflected in their actions for the last few years now at this point.
+
+# Why most Frameworks handle this far better
+
+You might think only **Remix** is the only one handling the task of doing one of **RSC's** jobs better, but it isn't the only one doing that, every framework and their *"meta-framework"* offer a very good alternative solution to the problem. In my eyes, **Qwik** does an excellent job because it had the end goal with server-rendering being a first party thing in mind. The `@builder.io/qwik-city` package exports 2 things which helps with this:
+
+- `routeLoader$`
+- `routeAction$`
+
+On first glance, these seem like a match made in heaven, but that's because they _really are_ and I cannot stress **THAT** enough. For example, this would create the *same effect as a **RSC*** would do but far cleaner:
+
+Data can be written to the server using something like:
+
+```jsx
+export const useAddUser = routeAction$(async (data, requestEvent) => {
+    const userID = await db.users.add({
+        firstName: data.firstName,
+        lastName: data.lastName,
+    });
+    return {
+        success: true,
+        userID,
+    };
+});
+
+export default component$(() => {
+    const action = useAddUser();
+    return (
+        <>
+            <Form action={action}>
+                <input name="firstName" />
+                <input name="lastName" />
+                <button type="submit">Add user</button>
+            </Form>            
+              {action.value?.success && (
+                <p>User {action.value.userID} added successfully</p>
+            )}
+        </>
+    );
+});
+```
+
+And you can load Data similarly, like this:
+```tsx
+export const useProductDetails = routeLoader$(async (requestEvent) => {
+    const res = await fetch(`https://.../products/${requestEvent.params.productId}`);
+    const product = await res.json();
+    return product as Product;
+});
+
+export default component$(() => {
+    const signal = useProductDetails(); 
+    return <p>Product name: {signal.value.product.name}</p>;
+});
+
+```
+
+**Qwik**'s approach to Data Writing and Data Fetching not only is ergonomic, it has far less chances of leaking and causing security issues, and is paired with automatic type inference for better DX too, very seamless; very clean.
+# A Sad but Predictable Conclusion
+Overall, **Next.js**' unhealthy obsession with **RSCs** as a marketing strategy to *"improve user-experience"* is ironic because it ends up damaging it, but also makes it harder for developers for no reason when other approaches have proven to achieve the same end result with an arguably far better yield. Bottom line is, **Next.js**' implementation of **RSCs** make it harder to justify them in the long run, I am very much looking forward to the approach by **Remix** in the upcoming year, as always, I'm confident in **Remix** team when it comes to delivering. In the end, shoutout to all major frameworks which do it nice and right; **Remix**, **Qwik**, and even **SvelteKit**. However, again this is not to say **RSCs** are an entirely bad idea, they just have their own set of use cases, such as:
+
+- Better Composition, and DX such as Type Inference
+- No More Painful work with React Contexts.
+
+In all honesty, I'd love **RSCs**, if they were implemented better, similar to **Qwik** for example. Ultimately, **RSCs** being good or not will come down to framework-specific implementation, and for that, I'll count on **Remix**, and with that; I'll sign myself out for now.

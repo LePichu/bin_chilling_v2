@@ -7,11 +7,10 @@ const layout = "speclabs.tsx",
 export { layout, meta }
 
 export default function () {
-    return (
-        <>
-           <section>
-
-            </section>
-        </>
-    )
+	return (
+		<>
+			<section>
+			</section>
+		</>
+	)
 }

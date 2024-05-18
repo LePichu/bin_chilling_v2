@@ -7,7 +7,9 @@ const Socials = {
 }
 
 const Meta = (props: Props) => {
-	const title = props.meta.title ? `ReMod SpecLabs | ${props.meta.title}` : "ReMod SpecLabs | Home"
+	const title = props.meta.title
+		? `ReMod SpecLabs | ${props.meta.title}`
+		: "ReMod SpecLabs | Home"
 	const description = props.meta.description ?? "ReMod SpecLabs | Website"
 	const image = props.meta.image ?? "/assets/speclabs_meta.png"
 	const theme = props.meta.theme ?? "#414DC9"
@@ -159,11 +161,17 @@ export default function Layout(props: Props) {
 							)
 							: (
 								<h1 class="m-0 font-light grow text-center text-white text-xl">
-									<a class="text-white visited:text-white no-underline hover:underline underline-offset-2" href="/speclabs/">
+									<a
+										class="text-white visited:text-white no-underline hover:underline underline-offset-2"
+										href="/speclabs/"
+									>
 										{"ReMod"}
 									</a>
 									<span>{" / "}</span>
-									<a class="text-white visited:text-white font-medium no-underline hover:underline underline-offset-2" href={props.url}>
+									<a
+										class="text-white visited:text-white font-medium no-underline hover:underline underline-offset-2"
+										href={props.url}
+									>
 										{props.meta.title}
 									</a>
 								</h1>

@@ -2,15 +2,15 @@ import Header from "./components/Header.tsx"
 import Footer from "./components/Footer.tsx"
 import { AuthorInfo, Data as Props } from "./Types.ts"
 
-const URL = `https://lepichudoes.deno.dev`
-
 const Meta = (props: Props) => {
 	const title =
 		`${props.blog ? "LePichu's Blog | " : ""}` + props.meta.title ??
 			"LePichu | Website"
 	const description = props.meta.description ?? "LePichu | Website"
-	const image = props.meta.image ?? `${URL}/assets/icon.png`
+	const image = props.meta.image ??
+		`https://lepichudoes.deno.dev/assets/icon.png`
 	const theme = props.meta.theme ?? "#F6BF00"
+	const URL = props.meta.url ?? `https://lepichudoes.deno.dev`
 
 	return (
 		<>
@@ -20,10 +20,17 @@ const Meta = (props: Props) => {
 				name="viewport"
 				content="width=device-width, initial-scale=1.0"
 			/>
+			<meta
+				name="google-site-verification"
+				content="XYxYdtAO4Y4tqtOuy-pj8D9zCIUh1c8FfN6Sy-JTcbE"
+			/>
 
 			<link rel="stylesheet" href="/index.css" />
 			<link rel="icon" href="/assets/icon.png" />
-			<script src="/index.js" defer></script>
+			{props.meta.url !== undefined
+				? <link rel="canonical" href={URL} />
+				: <></>}
+			<script src="/index.js" defer={true} type="module"></script>
 
 			<title>
 				{title}
@@ -103,7 +110,10 @@ const BlogDetail = (props: Props) => (
 					)
 				})}
 				<div class="flex gap-2 items-center">
-					<img src="/assets/blog_post_icons/cup.png" class="w-6 h-6" />
+					<img
+						src="/assets/blog_post_icons/cup.png"
+						class="w-6 h-6"
+					/>
 					<p class="m-0 blog-details-text text-xl hover:underline underline-offset-4">
 						<a
 							class="no-underline text-black visited:text-black"

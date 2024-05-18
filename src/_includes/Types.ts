@@ -17,6 +17,7 @@ export interface Data {
 		description?: string
 		image?: string
 		theme?: string
+		url?: string
 	}
 	blog: boolean
 	authors_db: Array<AuthorInfo>

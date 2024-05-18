@@ -5,14 +5,18 @@ supporters: {
 }
 authors_db:
   - name: "LePichu"
-    pfp: "https://cdn.discordapp.com/attachments/736493162117464084/1117290929330589766/icon.png"
+    pfp: "/assets/pfp/lepichu.png"
     desc: "
-      Local Dinosaur Enthusiast, working on
-      Raptor Tools and Educational Content related
-      to Rust, Deno, and more. Also reviews newer
+      Local Cat Enthusiast, working on
+      Compilers and Educational Content related
+      to Rust, TypeScript, and more. Also reviews newer
       programming languages and occasionally covers video games.
     "
-    pronouns: ""
+    pronouns: "they/them"
+  - name: "IshanKBG"
+    pfp: "/assets/pfp/ishankbg.png"
+    desc: "Avid Tinkerer, does Rusty C++, and has a drive to learn more each passing moment, former Astro Core Contributor."
+    pronouns: "he/them"
   - name: "pluiedev"
     pfp: "https://cdn.discordapp.com/attachments/1077976086228504736/1114717008207024178/everyones_beloved_fag.png"
     desc: "

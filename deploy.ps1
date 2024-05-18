@@ -1,5 +1,7 @@
 deno task lume
 
+$SITEMAP = Get-Content -Path ".\_site\sitemap.xml"
+Set-Content -Path ".\_site\sitemap.xml" -Value ($SITEMAP -Replace "http://localhost", "https://lepichudoes.deno.dev")
 Set-Location ".\_site"
 
 git init

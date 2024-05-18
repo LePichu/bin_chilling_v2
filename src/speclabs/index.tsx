@@ -31,21 +31,46 @@ export default function () {
 					</tr>
 					<tr class="h-48 md:h-24">
 						<td>
-							<a class="text-[#414DC9] visited:text-[#414DC9] no-underline underline-offset-2 hover:underline" href="/speclabs/raptor-rt">RaptorRT</a>
+							<a
+								class="text-[#414DC9] visited:text-[#414DC9] no-underline underline-offset-2 hover:underline"
+								href="/speclabs/raptor-rt"
+							>
+								RaptorRT
+							</a>
 						</td>
-						<td>A Server Runtime for JavaScript and family focusing on Web Standards, Extensibility, and Efficiency.</td>
+						<td>
+							A Server Runtime for JavaScript and family focusing
+							on Web Standards, Extensibility, and Efficiency.
+						</td>
 					</tr>
 					<tr class="h-48 md:h-24">
 						<td>
-							<a class="text-[#414DC9] visited:text-[#414DC9] no-underline underline-offset-2 hover:underline" href="/speclabs/blight">Blight</a>
+							<a
+								class="text-[#414DC9] visited:text-[#414DC9] no-underline underline-offset-2 hover:underline"
+								href="/speclabs/blight"
+							>
+								Blight
+							</a>
 						</td>
-						<td>A Rusty Programming Language for the JavaScript ecosystem with Virtual Threading and a solid standard library.</td>
+						<td>
+							A Rusty Programming Language for the JavaScript
+							ecosystem with Virtual Threading and a solid
+							standard library.
+						</td>
 					</tr>
 					<tr class="h-48 md:h-24">
 						<td>
-							<a class="text-[#414DC9] visited:text-[#414DC9] no-underline underline-offset-2 hover:underline" href="/speclabs/blight">Zircon</a>
+							<a
+								class="text-[#414DC9] visited:text-[#414DC9] no-underline underline-offset-2 hover:underline"
+								href="/speclabs/blight"
+							>
+								Zircon
+							</a>
 						</td>
-						<td>A Rusty Ruby compiling to JavaScript, inspired by Crystal and others.</td>
+						<td>
+							A Rusty Ruby compiling to JavaScript, inspired by
+							Crystal and others.
+						</td>
 					</tr>
 				</table>
 			</section>

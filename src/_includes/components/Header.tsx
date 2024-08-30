@@ -14,7 +14,7 @@ const TableIcon = (
 export default function Header() {
 	return (
 		<>
-			<header class="p-4 flex flex-col sticky top-0">
+			<header class="p-4 flex flex-col sticky top-0 z-10">
 				<section class="flex justify-between items-center">
 					<a href="/" className="no-underline">
 						<h1

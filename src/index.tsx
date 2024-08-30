@@ -136,7 +136,7 @@ function About() {
 							"PowerShell",
 						].map((tech, i) => (
 							<img
-								src={`/assets/tech/${tech.toLowerCase()}.png`}
+								src={`/assets/tech/${tech}.png`}
 								class="h-24 w-24 opacity-0 grayscale hover:grayscale-0 transition-all tech"
 								data-index={i}
 							/>

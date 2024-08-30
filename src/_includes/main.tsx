@@ -117,7 +117,6 @@ const BlogDetail = (props: Props) => (
 					<p class="m-0 blog-details-text text-xl hover:underline underline-offset-4">
 						<a
 							class="no-underline text-black visited:text-black"
-							// style={{ color: "black" }}
 							href="#blog-footer"
 						>
 							Buy me a Coffee!
@@ -142,7 +141,7 @@ const BlogConcluder = (props: Props) => (
 				}).formatToParts(props.supporters.discord)
 
 				return (
-					<div class="flex flex-col gap-4 border-solid border-gray-400 border-2 p-4 px-6 rounded-lg">
+					<div class="flex flex-col gap-4 border-solid border-gray-400 border p-4 px-6">
 						<h1 class="m-0">
 							Callout to the Real Ones
 						</h1>
@@ -181,7 +180,7 @@ const BlogConcluder = (props: Props) => (
 					a.name === author
 				)
 				return (
-					<div class="flex flex-col md:flex-row gap-4 border-solid border-gray-400 border-2 p-4 px-6 rounded-lg">
+					<div class="flex flex-col md:flex-row gap-4 border-solid border-gray-400 border p-4 px-6">
 						<img
 							src={author_data?.pfp}
 							class="h-auto w-full md:w-32 rounded-full"
@@ -213,7 +212,7 @@ export default function Layout(props: Props) {
 					<Header />
 					<main
 						id={props.blog ? "blog-content" : "content"}
-						class={props.blog ? "px-4 md:px-96" : ""}
+						class={props.blog ? "px-4 md:px-96" : "grow"}
 					>
 						{props.blog
 							? (

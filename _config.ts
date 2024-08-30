@@ -39,6 +39,11 @@ const plugins = [
 	codeHighlight(),
 	tailwindcss({
 		extensions: [".html", ".tsx"],
+		options: {
+			corePlugins: {
+				preflight: false,
+			}
+		}
 	}),
 	postcss(),
 	sitemap(),

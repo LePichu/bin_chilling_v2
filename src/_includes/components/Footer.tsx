@@ -2,6 +2,7 @@ const socials = {
 	"twitter": "https://twitter.com/ishatgupta",
 	"github": "https://github.com/lepichu",
 	"instagram": "https://instagram.com/lepichudoesdev",
+	"discord": "https://discord.gg/jvHdkCtjCZ"
 }
 
 export default function Footer() {
@@ -16,15 +17,15 @@ export default function Footer() {
 							target="_blank"
 						>
 							<img
-								src={`/assets/socials/${k}.png`}
-								className="h-12 w-12"
+								src={`/assets/socials/logo--${k}.svg`}
+								className="h-12 w-12 invert"
 							/>
 						</a>
 					))}
 				</section>
 
 				<p class="text-white text-center font-normal text-xl m-0">
-					© Copyright 2023{" "}
+					© Copyright 2023 to Present{" "}
 					<span class="hidden md:inline-block">{"-"}</span>{" "}
 					<br class="md:hidden" /> Ishat "LePichu" Gupta
 				</p>

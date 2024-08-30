@@ -1,52 +1,57 @@
 ---
 layout: main.tsx
 meta:
-    title: "From Phone to Swiss-Army-Knife Development Machine"
-    description: "Here is how you can turn your Android Phone into a completely overpowered programming machine which fits in your pocket."
+    title: "Phone? More like Workstation"
+    description: "It is as shrimple as that, really, the phone in your pocket can indeed be a programming war machine."
     image: "/assets/posts/swiss_army_knife_dev_phone.png"
     theme: "#"
 blog: true
 authors: [
 	"LePichu"
 ]
-publish: "25th August 2023"
+publish: "1st September 2024"
 time: "16.4 Minutes"
+tags: [
+    "Development",
+    "Mobile",
+    "Programming",
+    "Tools"
+]
 ---
+Over the past year, I have been primarily using my phone as a Development Environment, giving up not only using my Laptop for a long time, but also a ton of tools and resources that I'd be able to use otherwise, like Copilot, VSCode, IntelliJ, so many tools that I could no longer use, but I prevailed, I ended up figuring out how to program entirely on a phone like a fucking monk or pilgrim of sorts, this is my story, originally I was going to publish this post back in January, but I just decided to finally get around doing it because well, college started, and I need something to vent in, something to keep my sanity in check. So yeah, let's begin!
 
-People often ask me how I get stuff done when I am, say, not at my desk, or even home. Well the short answer is, my phone is a swiss knife, the longer answer is, eh... it is quite complex. If you know me, you know I have a portable dev setup on my phone, and you will also know I use the setup a lot regardless if I am at home or not. But historically, I wasn't always this invested, I used to be in it for the cool kid points, but that changed over a very long period of time. Over the last 3-4 weeks I have been going ham on REPL Driven Development thanks to the Author of [Ultra.js](https://ultrajs.dev), and all of it on my phone. Today we will explore how I get stuff done nowadays and the craziest part isn't even that it is on my phone, it is more or so how cursed my setup is. But anyways, let's discuss it, shall we?
+Through out this tutorial, we will install a shit ton of tools, the kinds of which are listed as follows:
+- Terminal (Termux)
+- Linux Distribution Environment (Fedora or Alpine)
+- Code Editor (Helix or NeoVim)
+- Runtimes, Compilers, and Tools
+- VNC, and Wireless Keyboards (Optional)
 
-Right, so, first things first, what do we need specifically? Well, for development people use a lot of things, but the core essentials here would be needing a terminal and then building atop of it. Oh, and this tutorial only applies to Android, sorry iOS Fans, I do feel your pain as an iPad user myself. Anyways, grab yourself a copy of [Termux](https://termux.dev/en/) first, now after that, here is what we will need to convert this basic terminal into a fully-fledged war machine:  
-
-- PRoot
-- Shell
-- IDE
-- DevTools
-- VNC (Optional)
-- Keyboard + Mouse (Optional)
-  
-# Behold, the Terminal
-This is our starting point, a clean slate terminal running **Bash**, or how I call it; *"**Bash** my Skull in"*, which is a terrible shell but we will fix that in a bit. You might be wondering, why did I mention needing a PRoot in the requirements above? The short answer is *software support*, the long answer gets kinda complicated, but the bottom line is that most software is compiled for `linux-aarch64` instead of `android-aarch64`, and a **PRoot** makes running software easier because it shims in stuff like **LibC** for everything to work as intended, except a few things which may not work properly like accessing protected files due to lack of root (*Example: Deno fails to spawn processes when running under a PRoot Environment in Termux*). 
+> Before we begin, I am aware a lot of people reading this probably aren't aware of many things, like differences between a Shell and a Terminal. For those people, the simple explanation is that, the shell is the *interpreter* of the shell language specific to that shell, for example: **PowerShell** will execute `.ps1`, `.psm1` and other related files to it, but something like `sh` or `bash` will execute POSIX Shell scripts. The Terminal or Terminal Emulator however, will run these shells by providing a *Teletyper (TTY)* environment, and a GUI for the system it is running on.
 
 # *\*Tips Fedora*\*
+For this specific tutorial I'd like to use Fedora, a distribution made by the Fedora Team building on components funded, related, or made by Red Hat and IBM. I however, wrote this section in it's original glory back in January, and personally, I'd like to honour the *original* write-up in its full-fledged comedic and rage-induced glory. Without further ado– *transmission cuts in*
+
 For this tutorial specifically, we will be building on top of a Fedora PRoot, there are obviously, other choices like Debian or Void, but over the years Fedora has become the one I most trust when it comes to stability and just working out of the box. First thing you wanna do is install `proot-distro`, and then log into it, do so by running the following commands:
+
 ```sh
 $> pkg install proot-distro
 ...
 $> proot-distro install fedora
 ...
-$> proot-distro login fedora --termux-home 
+$> proot-distro login fedora --termux-home
 # The `--termux-home` flag mounts your $HOME into the PRoot btw
 [root@localhost ]$
 ```
 
-> "*But Pichu, Why not Arch Linux 1?!?!?!?*" 
-> 
+> "*But Pichu, Why not Arch Linux 1?!?!?!?*"
+>
 > \- Some Annoying Fucker on the Internet
 
-SHUT THE **FUCK** UP, I AM TIRED OF YOU *VOCAL MINORITIES*, GO BACK TO BEING A *FAT ASS BASEMENT DWELLER* IN ***YOUR MOM's*** BASEMENT WITH NO JOB INSTEAD OF *ANNOYING* ME. Are they gone yet? Yep, sorry for that outbreak, happens to the best of us 😿 . Oh wait you want Void or Alpine? We can also work with that, the process is pretty similar but unfortunately, you cannot run PowerShell on a Alpine PRoot even with `gcompat`, Best bet is to build it yourself manually for this case, anyways instead of `fedora` install `void` and then log into it, after that the process is practically the same if you're using the tarball version, which we will do here over distro-specific package managers. 
+SHUT THE **FUCK** UP, I AM TIRED OF YOU *VOCAL MINORITIES*, GO BACK TO BEING A *FAT ASS BASEMENT DWELLER* IN ***YOUR MOM's*** BASEMENT WITH NO JOB INSTEAD OF *ANNOYING* ME. Are they gone yet? Yep, sorry for that outbreak, happens to the best of us 😿 . Oh wait you want Void or Alpine? We can also work with that, the process is pretty similar but unfortunately, you cannot run PowerShell on a Alpine PRoot even with `gcompat`, Best bet is to build it yourself manually for this case, anyways instead of `fedora` install `void` and then log into it, after that the process is practically the same if you're using the tarball version, which we will do here over distro-specific package managers.
 
 ```sh
-$> wget https://github.com/PowerShell/PowerShell/releases/download/v7.3.6/powershell-7.3.6-linux-arm64.tar.gz 
+$> wget https://github.com/PowerShell/PowerShell/releases/download/v7.3.6/powershell-7.3.6-linux-arm64.tar.gz
 ...
 $> mkdir pwsh
 $> tar -xf ./powershell-7.3.6-linux-arm64.tar.gz -C pwsh
@@ -57,15 +62,14 @@ $> ln -s /data/data/com.termux/files/home/pwsh/pwsh /usr/bin/pwsh
 $> chmod +x /usr/bin/pwsh
 ```
 
-With that being said, I might personally look into building PowerShell for ARM64 Alpine myself soon, so you can thank me later. 
+With that being said, I might personally look into building PowerShell for ARM64 Alpine myself soon, so you can thank me later.  
 
 When you boot up **PowerShell** for the first time, it can have a number of errors, well, primarily 2 of those that I know of, it either copes about having no `icu-libs` being present or CoreCLR cannot be created because your shitty ass phone, mine included, has only *4 fucking GB* of RAM or less, and that is a big no-no for CoreCLR. There is a simple fix for that, depending on your distro you just grab the right package, so that would be something like:
 
 ```sh
 # Run xbps-install -u xbps if you haven't used the pkg manager before this command
-# This is for void btw 
+# This is for void btw
 xbps-install -S icu-libs
-
 # This is for Fedora and RHEL-alike
 dnf install libicu
 ```

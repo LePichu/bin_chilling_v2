@@ -51,7 +51,7 @@ export default function () {
 			const path = Deno.readTextFileSync(`./src/blog/${post.name}`)
 			const { attrs } = extractor<PostData>(path)
 
-			attrs["js_time"] = new Date()
+			attrs["js_time"] = parseStringToDate(attrs["publish"])
 			attrs["file_path"] = `/blog/${post.name.replace(".mdx", "")}`
 			postsData.push(attrs)
 		}
@@ -64,7 +64,7 @@ export default function () {
 		"making-wasmtime-deno",
 		"objective-shell-comparison",
 		"sniper-challenge-cheatcode",
-		"swiss-army-knife-dev-phone",
+		// "swiss-army-knife-dev-phone",
 		"clis-as-blueprints",
 		"solid-jsx-in-vue",
 	]
@@ -80,34 +80,93 @@ export default function () {
 
 	return (
 		<>
-			{
-				/*
-				<section class="flex p-4">
-				<input
-					type="search"
-					placeholder="Search for Blog Posts!"
-					class="p-4 border-solid border-gray-400 focus:outline-none focus:shadow-xl shadow-black border-2 border-box rounded-xl flex-grow transition-all"
-				/>
-			</section> */
-			}
-			<section class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-				{postsData.map((post) => {
-					return (
-						<div class="flex flex-col gap-4 p-6 rounded-2xl border-solid border-gray-400 border-2">
-							<img
-								src={post.meta.image}
-								class="rounded-xl h-auto w-full"
-							/>
+			<section class="grid grid-cols-1 md:grid-cols-[22%_78%] grow justify-start items-start pb-8 md:px-32">
+				<section class="flex flex-col gap-4 p-4">
+					<input
+						type="search"
+						placeholder="Search for Blog Posts!"
+						class="p-4 pl-12 h-fit border-solid border-gray-400 outline-none focus:outline-none focus:shadow-xl shadow-black border border-box flex-grow transition-all"
+						id="blog-search"
+					/>
+					<div class="flex flex-col gap-4" id="featured">
+						<hr class="border-solid border-gray-300 border w-[25%] my-1" />
+						<h1 class="text-xl font-bold m-0 -mt-2 text-center">
+							Featured Posts
+						</h1>
+						{postsData.map((post) => {
+							if (post.featured === true) {
+								return (
+									<a
+										class="flex flex-col gap-4 p-6 border-solid border-gray-400 border hover:shadow-xl shadow-black transition-all no-underline text-black blog-post group"
+										href={post.file_path}
+									>
+										<img
+											src={post.meta.image}
+											class="rounded-xl h-auto w-full"
+										/>
+										<h1
+											class="m-0 text-lg font-bold no-underline group-hover:underline"
+											href={post.file_path}
+										>
+											{post.meta.title}
+										</h1>
+										<p class="m-0 text-sm">
+											{post.meta.description}
+										</p>
+										<hr class="border-solid border-gray-300 border w-[25%] my-1" />
+										<section class="flex flex-row flex-wrap gap-2">
+											{post.tags?.map((tag) => {
+												return (
+													<span class="rounded-lg bg-gray-200 text-gray-700 uppercase text-xs py-1 px-3">
+														{tag}
+													</span>
+												)
+											})}
+										</section>
+									</a>
+								)
+							}
+						})}
+					</div>
+				</section>
+
+				<hr class="md:hidden block border-solid border-gray-300 border w-[50%] my-4" />
+
+				<section
+					class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4"
+					id="blog-grid"
+				>
+					{postsData.map((post) => {
+						return (
 							<a
-								class="m-0 text-3xl font-bold no-underline text-black visited:text-black hover:underline"
+								class="flex flex-col gap-4 p-6 border-solid border-gray-400 border hover:shadow-2xl hover:scale-[1.025] shadow-black transition-all no-underline text-black visited:text-black blog-post group"
 								href={post.file_path}
 							>
-								{post.meta.title}
+								<img
+									src={post.meta.image}
+									class="rounded-xl h-auto w-full pointer-events-none"
+								/>
+								<h1
+									class="m-0 text-3xl font-bold no-underline group-hover:underline pointer-events-none"
+									href={post.file_path}
+								>
+									{post.meta.title}
+								</h1>
+								<p class="m-0 pointer-events-none">{post.meta.description}</p>
+								<hr class="border-solid border-gray-300 border w-[25%] my-1 pointer-events-none" />
+								<section class="flex flex-row flex-wrap gap-2 pointer-events-none">
+									{post.tags?.map((tag) => {
+										return (
+											<span class="rounded-lg bg-gray-200 text-gray-700 uppercase text-xs py-1 px-3">
+												{tag}
+											</span>
+										)
+									})}
+								</section>
 							</a>
-							<p class="m-0">{post.meta.description}</p>
-						</div>
-					)
-				})}
+						)
+					})}
+				</section>
 			</section>
 		</>
 	)

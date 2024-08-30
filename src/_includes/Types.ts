@@ -25,6 +25,8 @@ export interface Data {
 	publish: string
 	time: string
 	supporters: SupporterData
+	tags?: Array<string>
+	featured?: boolean
 }
 
 export interface SpecLabsData {

@@ -2,7 +2,7 @@
 layout: main.tsx
 meta:
   title: RSCs are Yapper Propaganda 
-  description: Fuck Vercel, All my homies hate Vercel.
+  description: Fuck Vercel, All my homies hate Vercel. Also a story about how capitalism is the root of all evil.
   image: /assets/posts/rsc-yapping.png
   theme: "#FFFFFF"
   url: "https://ishankbg.dev/blog/react-server-components-a-bad-idea/"
@@ -12,6 +12,13 @@ authors:
   - IshanKBG
 publish: 17th April 2024
 time: 18.8 Minutes
+tags: [
+	"React",
+	"Web Dev",
+	"Programming",
+	"Frameworks"
+]
+featured: true
 ---
 
 _**\<inhales>**_ It has been more than 4 years since I started *Web Dev* and to this **React** was a very specific *"ick"* for me, everything about it felt... Off in some way, and this was before me discovering **Preact**, **Solid**, **Vue**, many more frameworks, and how cleaner their patterns were. *Signals, **SFCs**, and many other things* were one of the several things which set them apart as _"**React** Alternatives"_, and **_really_ good** ones, so much so I could probably devolve this article into why you should stop using **React** as a whole, and maybe I will. As of Recent, but by recent I mean like, maybe 2-3~ years??? **React** has focused an emphasis on what they dub "***React Server Components**"*, now, on first thought you may have the following responses:
@@ -37,7 +44,7 @@ A while back, **Next.js** introduced support for **RSCs** in [v13](https://nextj
 
 ```tsx
 export default function Loading() {
-    return <LoadingSkeleton />;
+	return <LoadingSkeleton />
 }
 ```
 
@@ -45,13 +52,12 @@ Over something simpler like this:
 
 ```tsx
 export default function Route() {
-    return (
-        <Suspense fallback={<LoadingSkeleton />}>
-            <UI />
-        </Suspense>
-    );
+	return (
+		<Suspense fallback={<LoadingSkeleton />}>
+			<UI />
+		</Suspense>
+	)
 }
-
 ```
 
 Another thing that should be mentioned is that **Next.js** actively allows and borderline encourages *"Component Level Data Access"* despite it being not only a bad practice, but a security risk too, as to why; it will become apparent in a bit. To counter that, *Sebastian Markbàge*, a former **Meta** Developer who now works at **Vercel**, has written a [blog post](https://nextjs.org/blog/security-nextjs-server-components-actions) when it comes to handling security within the context of a **Next.js** Application or Web Page.
@@ -59,18 +65,17 @@ Another thing that should be mentioned is that **Next.js** actively allows and b
 Server and Client directives introduce noticable overhead for the developer mentally, but also introduce friction between interactions, it is one thing to be simpler and efficient, it is another to badly rip-off something else. At the end of the day, *this* does feel like a wanna-be **PHP** clone with the usage of the `"use server"` directive:
 ```tsx
 export function Bookmark(slug) {
-    return (
-        <button
-            formAction={async () => {
-                "use server";
-                await sql`INSERT INTO Bookmarks (slug) VALUES (${slug})`;
-            }}
-        >
-            <BookmarkIcon />
-        </button>
-    );
+	return (
+		<button
+			formAction={async () => {
+				"use server"
+				await sql`INSERT INTO Bookmarks (slug) VALUES (${slug})`
+			}}
+		>
+			<BookmarkIcon />
+		</button>
+	)
 }
-
 ```
 
 **Next.js** despite advertising to be *"modern"* and *"friendly"* likes to introduce complicated and heinous practices which are the polar opposite, including things like security as mentioned above. A [Tweet](https://twitter.com/tomus_sherman/status/1654211227172716545) by Tom Sherman points out how **Next.js** **RSCs** allow you to easily leak secrets to the client instead of them staying on the server as you'd expect, again; bad design leads to bad practices.
@@ -97,96 +102,90 @@ Here's how you are going to load data in **Remix**.
 
 ```tsx
 export async function loader() {
-  const user = await getUser();
-  //loading data in parallel without creating waterfalls
-  const [notifications, comments, posts] = await Promise.all([
-    getNotifications(user.id),
-    getComments(user.id),
-    getPosts(user.id)
-  ]);
-  
-  return json({
-    notifications,
-    comments,
-    posts
-  });
+	const user = await getUser()
+	//loading data in parallel without creating waterfalls
+	const [notifications, comments, posts] = await Promise.all([
+		getNotifications(user.id),
+		getComments(user.id),
+		getPosts(user.id),
+	])
+
+	return json({
+		notifications,
+		comments,
+		posts,
+	})
 }
 
 export async function clientLoader({ request, params, serverLoader }) {
-  const [serverData, clientData] = await Promise.all([
-    serverLoader(),
-    getDataFromClient()
-  ]);
-  
-  return {
-    ...serverData,
-    ...clientData,
-  };
+	const [serverData, clientData] = await Promise.all([
+		serverLoader(),
+		getDataFromClient(),
+	])
+
+	return {
+		...serverData,
+		...clientData,
+	}
 }
 
 export default function Route() {
-  const data = useLoaderData<typeof loader>();
-  // render your data
-  // ...
+	const data = useLoaderData<typeof loader>()
+	// render your data
+	// ...
 }
-
 ```
 
 This not only is simpler to understand and ergonomic in nature, but it also makes sure you aren't leaking anything easily, if at all to the client. You can read more about how **Remix** does *Data Fetching* [here](https://remix.run/docs/en/main/guides/data-loading). **Remix** always keeps your data in sync with your UI. Additionally, instead of putting server-side code in your component to compute form data, you can simply use an API called [Data Actions](https://remix.run/docs/en/main/guides/data-writes), which are both highly secure and really ergonomic to work with.
 
 ```tsx
-import { useActionData, redirect } from 'somewhere';
+import { useActionData, redirect } from "somewhere"
 
 export async function action({ request }) {
-    const body = await request.formData();
-    const bookmark = await createBookmark(body);
-    return redirect(`/bookmark/${bookmark.id}`);
+	const body = await request.formData()
+	const bookmark = await createBookmark(body)
+	return redirect(`/bookmark/${bookmark.id}`)
 }
 
 export function CreateBookmark() {
-    const actionData = useActionData<typeof action>();
+	const actionData = useActionData<typeof action>()
 
-    return (
-        <form method="post" action="/bookmarks/new">
-            <p>
-                <label>
-                    Name:{" "}
-                    <input
-                        name="name"
-                        type="text"
-                        defaultValue={actionData?.values.name}
-                    />
-                </label>
-            </p>
-            {actionData?.errors.name ? (
-                <p style={{ color: "red" }}>
-                    {actionData.errors.name}
-                </p>
-            ) : null}
+	return (
+		<form method="post" action="/bookmarks/new">
+			<p>
+				<label>
+					Name:{" "}
+					<input
+						name="name"
+						type="text"
+						defaultValue={actionData?.values.name}
+					/>
+				</label>
+			</p>
+			{actionData?.errors.name ? (
+				<p style={{ color: "red" }}>{actionData.errors.name}</p>
+			) : null}
 
-            <p>
-                <label>
-                    Description:
-                    <br />
-                    <textarea
-                        name="description"
-                        defaultValue={actionData?.values.description}
-                    />
-                </label>
-            </p>
-            {actionData?.errors.description ? (
-                <p style={{ color: "red" }}>
-                    {actionData.errors.description}
-                </p>
-            ) : null}
+			<p>
+				<label>
+					Description:
+					<br />
+					<textarea
+						name="description"
+						defaultValue={actionData?.values.description}
+					/>
+				</label>
+			</p>
+			{actionData?.errors.description ? (
+				<p style={{ color: "red" }}>{actionData.errors.description}</p>
+			) : null}
 
-            <p>
-                <button type="submit">Create</button>
-            </p>
-        </form>
-    );
+			<p>
+				<button type="submit">Create</button>
+			</p>
+		</form>
+	)
 }
-
 ```
 
 **Remix**'s approach to Data Modelling and providing APIs for such is far more ergonomic and cleaner than say, **Next.js**' approach to Data Modelling in context of **RSCs**.
@@ -220,46 +219,47 @@ Data can be written to the server using something like:
 
 ```jsx
 export const useAddUser = routeAction$(async (data, requestEvent) => {
-    const userID = await db.users.add({
-        firstName: data.firstName,
-        lastName: data.lastName,
-    });
-    return {
-        success: true,
-        userID,
-    };
-});
+	const userID = await db.users.add({
+		firstName: data.firstName,
+		lastName: data.lastName,
+	})
+	return {
+		success: true,
+		userID,
+	}
+})
 
 export default component$(() => {
-    const action = useAddUser();
-    return (
-        <>
-            <Form action={action}>
-                <input name="firstName" />
-                <input name="lastName" />
-                <button type="submit">Add user</button>
-            </Form>            
-              {action.value?.success && (
-                <p>User {action.value.userID} added successfully</p>
-            )}
-        </>
-    );
-});
+	const action = useAddUser()
+	return (
+		<>
+			<Form action={action}>
+				<input name="firstName" />
+				<input name="lastName" />
+				<button type="submit">Add user</button>
+			</Form>
+			{action.value?.success && (
+				<p>User {action.value.userID} added successfully</p>
+			)}
+		</>
+	)
+})
 ```
 
 And you can load Data similarly, like this:
 ```tsx
 export const useProductDetails = routeLoader$(async (requestEvent) => {
-    const res = await fetch(`https://.../products/${requestEvent.params.productId}`);
-    const product = await res.json();
-    return product as Product;
-});
+	const res = await fetch(
+		`https://.../products/${requestEvent.params.productId}`,
+	)
+	const product = await res.json()
+	return product as Product
+})
 
 export default component$(() => {
-    const signal = useProductDetails(); 
-    return <p>Product name: {signal.value.product.name}</p>;
-});
-
+	const signal = useProductDetails()
+	return <p>Product name: {signal.value.product.name}</p>
+})
 ```
 
 **Qwik**'s approach to Data Writing and Data Fetching not only is ergonomic, it has far less chances of leaking and causing security issues, and is paired with automatic type inference for better DX too, very seamless; very clean.

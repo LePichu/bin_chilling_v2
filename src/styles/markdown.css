@@ -1,5 +1,5 @@
 /* @import url("https://unpkg.com/highlightjs@9.16.2/styles/atom-one-dark-reasonable.css"); */
-@import url("https://unpkg.com/highlightjs@9.16.2/styles/an-old-hope.css");
+/* @import url("https://unpkg.com/highlightjs@9.16.2/styles/an-old-hope.css"); */
 
 #blog-content a {
     color: #4FB4D7;
@@ -36,7 +36,7 @@
     margin-top: 1.75rem;
 }
 
-#blog-content > h1 > a::after {
+#blog-content>h1>a::after {
     content: "@";
 }
 
@@ -44,13 +44,15 @@
     line-height: 1.5rem;
 }
 
-#blog-content p img, #blog-content video {
+#blog-content p img,
+#blog-content video {
     max-width: 100%;
     border-radius: 8px;
 }
 
-p>code,
-a>code {
+p code,
+a code,
+li code {
     display: inline-block;
     word-break: break-all;
     background-color: rgb(230, 230, 230);
@@ -60,14 +62,15 @@ a>code {
     margin: 0rem 0.25rem;
     border-radius: 0.25rem;
     line-height: 0.5rem;
-    font-family: "Fira Code", monospace;
+    font-family: "IBM Plex Mono", monospace;
 }
 
-p>code {
+p code,
+li code {
     color: rgb(32, 32, 32);
 }
 
-a>code:hover {
+a code:hover {
     text-decoration: underline;
 }
 
@@ -89,7 +92,7 @@ blockquote p:nth-of-type(2) {
     text-align: right;
 }
 
-.hljs {
+/* .hljs {
     display: block;
     padding: 1rem;
     font-family: "Fira Code", monospace;
@@ -103,7 +106,7 @@ blockquote p:nth-of-type(2) {
 
 .hljs>* {
     font-family: "Fira Code", monospace;
-}
+} */
 
 @media (any-pointer: coarse) and (min-width: 768px) {
     @media (orientation: portrait) {
@@ -111,9 +114,23 @@ blockquote p:nth-of-type(2) {
             padding: 0rem 4rem;
         }
     }
+
     @media (orientation: landscape) {
         #blog-content {
             padding: 0rem 12rem;
         }
     }
+}
+
+.shiki {
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+.shiki * {
+    font-family: "IBM Plex Mono";
+}
+
+.shiki::-webkit-scrollbar {
+    height: 0px;
 }

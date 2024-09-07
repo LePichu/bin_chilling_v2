@@ -68,7 +68,9 @@ function About() {
 
 					<div class="flex flex-col gap-2 justify-between py-4">
 						<h1 class="flex flex-col gap-2 m-0 font-mono">
-							<span class="block font-normal opacity-0 transition-all hello">Hello, I am</span>
+							<span class="block font-normal opacity-0 transition-all hello">
+								Hello, I am
+							</span>
 							<span class="block font-bold text-6xl">
 								{"LePichu".split("").map((letter, index) => {
 									return (
@@ -128,7 +130,9 @@ function About() {
 					</div>
 				</div>
 				<div class="flex flex-col gap-8">
-					<h1 class="m-0 text-center opacity-0 tech-intro">Here's what I work with!</h1>
+					<h1 class="m-0 text-center opacity-0 tech-intro">
+						Here's what I work with!
+					</h1>
 					<div class="grid grid-cols-2 md:grid-cols-4 gap-8 place-items-center">
 						{[
 							"Rust",

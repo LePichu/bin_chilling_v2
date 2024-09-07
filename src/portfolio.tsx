@@ -18,7 +18,6 @@ export default function () {
 	return (
 		<>
 			<section class="px-4 md:px-40">
-				
 			</section>
 		</>
 	)

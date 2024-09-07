@@ -64,7 +64,7 @@ export default function () {
 		"making-wasmtime-deno",
 		"objective-shell-comparison",
 		"sniper-challenge-cheatcode",
-		// "swiss-army-knife-dev-phone",
+		"swiss-army-knife-dev-phone",
 		"clis-as-blueprints",
 		"solid-jsx-in-vue",
 	]
@@ -102,7 +102,7 @@ export default function () {
 									>
 										<img
 											src={post.meta.image}
-											class="rounded-xl h-auto w-full"
+											class="rounded-xl h-autol"
 										/>
 										<h1
 											class="m-0 text-lg font-bold no-underline group-hover:underline"
@@ -139,12 +139,12 @@ export default function () {
 					{postsData.map((post) => {
 						return (
 							<a
-								class="flex flex-col gap-4 p-6 border-solid border-gray-400 border hover:shadow-2xl hover:scale-[1.025] shadow-black transition-all no-underline text-black visited:text-black blog-post group"
+								class="flex flex-col gap-4 p-6 border-solid border-gray-400 border hover:shadow-2xl md:hover:scale-[1.025] shadow-black transition-all no-underline text-black visited:text-black blog-post group"
 								href={post.file_path}
 							>
 								<img
 									src={post.meta.image}
-									class="rounded-xl h-auto w-full pointer-events-none"
+									class="rounded-xl h-auto pointer-events-none"
 								/>
 								<h1
 									class="m-0 text-3xl font-bold no-underline group-hover:underline pointer-events-none"
@@ -152,7 +152,9 @@ export default function () {
 								>
 									{post.meta.title}
 								</h1>
-								<p class="m-0 pointer-events-none">{post.meta.description}</p>
+								<p class="m-0 pointer-events-none">
+									{post.meta.description}
+								</p>
 								<hr class="border-solid border-gray-300 border w-[25%] my-1 pointer-events-none" />
 								<section class="flex flex-row flex-wrap gap-2 pointer-events-none">
 									{post.tags?.map((tag) => {

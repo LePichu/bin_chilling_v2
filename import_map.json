@@ -1,6 +1,6 @@
 {
 	"imports": {
-		"lume/": "https://cdn.jsdelivr.net/gh/lumeland/lume@025f643e36f67a952b5b4d2ba343580e7ec3d14d/",
+		"lume/": "https://deno.land/x/lume@v2.3.0/",
 		"preact": "https://esm.sh/preact@10.15.0",
 		"std/": "https://deno.land/std@0.190.0/"
 	}

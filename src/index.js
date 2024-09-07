@@ -212,7 +212,7 @@ if (window.location.pathname === "/blog/") {
 
 	const blogs = blogGrid.querySelectorAll("a")
 	blogs.forEach((blog) => {
-		blog.addEventListener("mouseover", () => {
+		blog.addEventListener("pointerover", () => {
 			blogs.forEach((b) => {
 				if (b !== blog) {
 					b.style.filter = "grayscale(1) blur(1px)"
@@ -221,33 +221,13 @@ if (window.location.pathname === "/blog/") {
 			})
 		})
 
-		blog.addEventListener("mouseleave", () => {
+		blog.addEventListener("pointerout", () => {
 			blogs.forEach((b) => {
 				if (b !== blog) {
 					b.style.filter = "none"
 					b.style.opacity = "1"
 				}
 			})
-		})
-	})
-
-	blogGrid.addEventListener("mouseover", () => {
-		featured.animate([
-			{ filter: "grayscale(1) blur(1px)", opacity: "0.5" },
-		], {
-			duration: 150,
-			fill: "forwards",
-			iterations: 1,
-		})
-	})
-
-	blogGrid.addEventListener("mouseleave", () => {
-		featured.animate([
-			{ filter: "none", opacity: "1" },
-		], {
-			duration: 150,
-			fill: "forwards",
-			iterations: 1,
 		})
 	})
 

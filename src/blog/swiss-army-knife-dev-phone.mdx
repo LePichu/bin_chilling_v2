@@ -4,12 +4,12 @@ meta:
     title: "Phone? More like Workstation"
     description: "It is as shrimple as that, really, the phone in your pocket can indeed be a programming war machine."
     image: "/assets/posts/swiss_army_knife_dev_phone.png"
-    theme: "#"
+    theme: "#27312E"
 blog: true
 authors: [
 	"LePichu"
 ]
-publish: "1st September 2024"
+publish: "20th September 2024"
 time: "16.4 Minutes"
 tags: [
     "Development",
@@ -21,14 +21,16 @@ tags: [
 Over the past year, I have been primarily using my phone as a Development Environment, giving up not only using my Laptop for a long time, but also a ton of tools and resources that I'd be able to use otherwise, like Copilot, VSCode, IntelliJ, so many tools that I could no longer use, but I prevailed, I ended up figuring out how to program entirely on a phone like a fucking monk or pilgrim of sorts, this is my story, originally I was going to publish this post back in January, but I just decided to finally get around doing it because well, college started, and I need something to vent in, something to keep my sanity in check. So yeah, let's begin!
 
 Through out this tutorial, we will install a shit ton of tools, the kinds of which are listed as follows:
-- Terminal (Termux)
-- Linux Distribution Environment (Fedora or Alpine)
-- Code Editor (Helix or NeoVim)
+- Terminal (**Termux**)
+- Linux Distribution Environment (**Fedora** or **Void**)
+- Code Editor (**Helix** or **NeoVim**)
 - Runtimes, Compilers, and Tools
 - VNC, and Wireless Keyboards (Optional)
 
-> Before we begin, I am aware a lot of people reading this probably aren't aware of many things, like differences between a Shell and a Terminal. For those people, the simple explanation is that, the shell is the *interpreter* of the shell language specific to that shell, for example: **PowerShell** will execute `.ps1`, `.psm1` and other related files to it, but something like `sh` or `bash` will execute POSIX Shell scripts. The Terminal or Terminal Emulator however, will run these shells by providing a *Teletyper (TTY)* environment, and a GUI for the system it is running on.
+> Before we begin, I am aware a lot of people reading this probably aren't aware of many things, like differences between a *Shell* and a *Terminal*. For those people, the simple explanation is that, the shell is the *interpreter* of the shell language specific to that shell, for example: **PowerShell** will execute `.ps1`, `.psm1` and other related files to it, but something like `sh` or `bash` will execute *POSIX Shell scripts*. The **Terminal** or **Terminal Emulator** however, will run these shells by providing a *Teletyper (TTY)* environment, and a **GUI** for the system it is running on.
 
+# Terminal Station: A(ndroid)
+For the first step of this *"tutorial"* of sorts, we need to install **Termux**, a *Terminal Emulator and Teletyper Environment for Android*, **Termux** was at the original time of writing this, no longer available on the Play Store, but they are trying out to get it up there and updated again, that being said, I would still recommend getting it from either F-droid or the GitHub Releases of the [`termux/termux-app`](https://github.com/termux/termux-app) repository. While this would give you a bare and minimal setup, you can optionally install the `Termux:API` and `Termux:Styling` packages, Style helps make it more comfy and home-like a lot more, while `Termux:API` is optional, I do recommend you install it to get things like *Clipboard, TTS, System peripherals like Brightness* and more working in programs like **Helix** and **PowerShell**, otherwise you cannot sync to your actual Android keyboard or fetch data from it. Lastly, customise to your heart's content by holding down on the screen and then selecting style, if you want that is, we won't judge, but moving on, we now will start with the actual setup.
 # *\*Tips Fedora*\*
 For this specific tutorial I'd like to use Fedora, a distribution made by the Fedora Team building on components funded, related, or made by Red Hat and IBM. I however, wrote this section in it's original glory back in January, and personally, I'd like to honour the *original* write-up in its full-fledged comedic and rage-induced glory. Without further ado– *transmission cuts in*
 
@@ -73,3 +75,28 @@ xbps-install -S icu-libs
 # This is for Fedora and RHEL-alike
 dnf install libicu
 ```
+
+_Transmission cuts off_ Well, as you can see, that was, well, raw to say the very least. While that was originally written in *maybe* written in Last December or around Christmas, I have learned how to fix the **CoreCLR** error now for not just PowerShell, but also everything **.NET** running under a *PRoot or Chroot* environment, like the one in **Termux**. To achieve this, we need to set an Environment Variable specifically, the **.NET** Heap Limit one, to do so, you can either:
+
+- Overwrite the `.bashrc` to set the context in Bash itself
+- Or spawn into PowerShell directly and set the variable using the `--env` in the `proot-distro` CLI
+  
+So that would look something like this:
+
+```sh
+# Log into the PRoot
+proot-distro login fedora --termux-home --env DOTNET_GCHeapHardLimit="1C0000000" -- $PWSH_PATH 
+
+# Or do this in your .bashrc
+export DOTNET_GCHeapHardLimit="1C0000000"
+```
+
+Well, we have a PRoot now, what next? We should make Termux log into the PRoot on startup, right? Well yes, that is exactly what someone like me does, to do that we need to edit our `.bashrc` file, as Termux itself spawns Bash on startup, you can change that, and perhaps you can even write a tiny program to spawn into a PRoot directly, skipping the shell process as a whole, but either way, edit your `.bashrc` and add something like the above:
+
+```sh
+# Note: My PowerShell is stored at $HOME/pwsh
+# Please do NOT forget to run `chmod +x pwsh`
+proot-distro login fedora --termux-home --env DOTNET_GCHeapHardLimit="1C0000000" -- $HOME/pwsh/pwsh
+```
+
+Now, every time Termux boots up, you will be logged into the PRoot itself directly.

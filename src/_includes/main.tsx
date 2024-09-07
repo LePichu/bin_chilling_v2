@@ -212,7 +212,9 @@ export default function Layout(props: Props) {
 					<Header />
 					<main
 						id={props.blog ? "blog-content" : "content"}
-						class={props.blog ? "px-4 md:px-96" : "grow flex flex-col"}
+						class={props.blog
+							? "px-4 md:px-96"
+							: "grow flex flex-col"}
 					>
 						{props.blog
 							? (

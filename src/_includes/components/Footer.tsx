@@ -2,7 +2,7 @@ const socials = {
 	"twitter": "https://twitter.com/ishatgupta",
 	"github": "https://github.com/lepichu",
 	"instagram": "https://instagram.com/lepichudoesdev",
-	"discord": "https://discord.gg/jvHdkCtjCZ"
+	"discord": "https://discord.gg/jvHdkCtjCZ",
 }
 
 export default function Footer() {

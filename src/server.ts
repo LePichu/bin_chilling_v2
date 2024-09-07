@@ -8,7 +8,7 @@ const server = new Server({
 
 server.use(not_found({
 	root: ".",
-	page404: "/404/index.html",
+	page404: "/404.html",
 }))
 
 server.start()

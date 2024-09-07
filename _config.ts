@@ -83,4 +83,6 @@ site.process([".mdx"], (pages) => {
 site.copy("assets")
 site.copy("server.ts")
 site.copy("index.js")
+site.copy("google960bff13302df6ac.html")
+
 export default site

@@ -7,10 +7,11 @@ const Meta = (props: Props) => {
 		`${props.blog ? "LePichu's Blog | " : ""}` + props.meta.title ??
 			"LePichu | Website"
 	const description = props.meta.description ?? "LePichu | Website"
-	const image = props.meta.image ??
-		`https://lepichudoes.deno.dev/assets/icon.png`
 	const theme = props.meta.theme ?? "#F6BF00"
 	const URL = props.meta.url ?? `https://lepichudoes.deno.dev`
+	const image = props.meta.image
+		? (`${URL}${props.meta.image}`)
+		: `https://lepichudoes.deno.dev/assets/icon.png`
 
 	return (
 		<>

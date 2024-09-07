@@ -10,7 +10,7 @@ const Meta = (props: Props) => {
 	const theme = props.meta.theme ?? "#F6BF00"
 	const URL = props.meta.url ?? `https://lepichudoes.deno.dev`
 	const image = props.meta.image
-		? (`${URL}${props.meta.image}`)
+		? (`https://lepichudoes.deno.dev${props.meta.image}`)
 		: `https://lepichudoes.deno.dev/assets/icon.png`
 
 	return (

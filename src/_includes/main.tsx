@@ -35,8 +35,8 @@ const Meta = (props: Props) => {
 			<script src="/index.js" defer={true} type="module"></script>
 			<script
 				defer
-				src="https://analytics.ishankbg.dev/script.js"
-				data-website-id="4b784bf1-117d-496b-a6df-e0cf87b530d3"
+				src="https://umami-black-xi.vercel.app/script.js"
+				data-website-id="f6589f1a-3a0c-467f-9a95-b2893da7eabc"
 			>
 			</script>
 

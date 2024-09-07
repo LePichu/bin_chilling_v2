@@ -31,7 +31,14 @@ const Meta = (props: Props) => {
 			{props.meta.url !== undefined
 				? <link rel="canonical" href={URL} />
 				: <></>}
+
 			<script src="/index.js" defer={true} type="module"></script>
+			<script
+				defer
+				src="https://analytics.ishankbg.dev/script.js"
+				data-website-id="4b784bf1-117d-496b-a6df-e0cf87b530d3"
+			>
+			</script>
 
 			<title>
 				{title}

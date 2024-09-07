@@ -8,7 +8,6 @@ const fleetDark = JSON.parse(
 const highligher = await getHighlighter({
 	themes: [
 		fleetDark,
-		"material-theme-darker",
 	],
 	langs: [
 		"rust",
@@ -38,7 +37,7 @@ export default function shiki() {
 										.getAttribute("class")?.split(" ")[0]
 										.replace("language-", "")!,
 									// use Material until Fleet Dark is ready
-									theme: "material-theme-darker",
+									theme: "fleet-dark",
 								},
 							)
 							el.parentElement.innerHTML = codeHtml

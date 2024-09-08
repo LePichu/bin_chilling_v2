@@ -222,7 +222,7 @@ export default function Layout(props: Props) {
 						id={props.blog ? "blog-content" : "content"}
 						class={props.blog
 							? "px-4 md:px-96"
-							: "grow flex flex-col"}
+							: "grow flex items-center justify-center"}
 					>
 						{props.blog
 							? (

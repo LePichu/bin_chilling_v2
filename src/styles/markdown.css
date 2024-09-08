@@ -129,6 +129,7 @@ blockquote p:nth-of-type(2) {
 
 .shiki * {
     font-family: "IBM Plex Mono";
+    tab-size: 2rem;
 }
 
 .shiki::-webkit-scrollbar {

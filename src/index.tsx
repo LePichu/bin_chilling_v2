@@ -56,7 +56,7 @@ function Construction() {
 function About() {
 	return (
 		<>
-			<div class="flex flex-col gap-16 p-4 px-8 py-8 md:px-64">
+			<div class="flex flex-col grow gap-16 p-4 px-8 py-8 md:px-64">
 				<div class="grid grid-cols-1 md:grid-cols-[30%_70%] gap-4 md:gap-16">
 					<div class="flex h-full w-full rounded-full aspect-square bg-black">
 						<img
@@ -107,7 +107,7 @@ function About() {
 						</div>
 					</div>
 				</div>
-				<div>
+				{/* <div>
 					<p class="text-lg flex flex-wrap m-0 intro-text">
 						Meow Meow Meow
 					</p>
@@ -146,7 +146,7 @@ function About() {
 							/>
 						))}
 					</div>
-				</div>
+				</div> */}
 			</div>
 		</>
 	)
@@ -155,7 +155,7 @@ function About() {
 export default function () {
 	return (
 		<>
-			<section class="flex justify-center items-center">
+			<section class="flex justify-center items-center grow">
 				<About />
 			</section>
 		</>

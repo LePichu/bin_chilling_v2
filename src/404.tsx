@@ -22,7 +22,7 @@ export { layout, meta }
 export default function () {
 	return (
 		<>
-			<section class="flex flex-col gap-2 items-center justify-center">
+			<section class="flex flex-col grow gap-2 items-center justify-center">
 				{/* <section class="flex flex-col m-4 items-center justify-center text-center text-black"> */}
 				<img src="/assets/cat_dead.png" class="w-auto h-48 m-0" />
 				<h1 class="m-0">Oh nyowos~! {">//-//<"}</h1>

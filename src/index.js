@@ -211,23 +211,35 @@ if (window.location.pathname === "/blog/") {
 	const featured = document.querySelector("#featured")
 
 	const blogs = blogGrid.querySelectorAll("a")
+
+	// deno-lint-ignore no-window
+	const isDesktop = window.matchMedia("(min-width: 768px)").matches
+
 	blogs.forEach((blog) => {
-		blog.addEventListener("pointerover", () => {
+		function fadeIn() {
 			blogs.forEach((b) => {
 				if (b !== blog) {
 					b.style.filter = "grayscale(1) blur(1px)"
 					b.style.opacity = "0.5"
 				}
 			})
-		})
+		}
 
-		blog.addEventListener("pointerout", () => {
+		function fadeOut() {
 			blogs.forEach((b) => {
 				if (b !== blog) {
 					b.style.filter = "none"
 					b.style.opacity = "1"
 				}
 			})
+		}
+
+		blog.addEventListener("pointerover", () => {
+			isDesktop ? fadeIn() : null
+		})
+
+		blog.addEventListener("pointerout", () => {
+			isDesktop ? fadeOut() : null
 		})
 	})
 

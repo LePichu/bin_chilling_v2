@@ -14,7 +14,8 @@ server.use(not_found({
 
 server.use(redirects({
 	redirects: {
-		"/cuhp_2024": "https://chat.whatsapp.com/DKa0xkKrJn7AYWMGgjILtc"
+		"/cuhp_2024": "https://chat.whatsapp.com/DKa0xkKrJn7AYWMGgjILtc",
+		"/for-jiya/03-10-06": "https://happy-birthday-jiya.deno.dev/"
 	},
 }))
 

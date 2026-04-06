@@ -1,11 +1,10 @@
 import lume from "lume/mod.ts"
-import jsx_preact from "lume/plugins/jsx_preact.ts"
+import jsx from "lume/plugins/jsx.ts"
 import mdx from "lume/plugins/mdx.ts"
 import shiki from "./plugins/shiki/mod.ts"
 import HeadingsSlug from "npm:rehype-slug"
 import AutolinksHeadings from "npm:rehype-autolink-headings"
 import tailwindcss from "lume/plugins/tailwindcss.ts"
-import postcss from "lume/plugins/postcss.ts"
 import sitemap from "lume/plugins/sitemap.ts"
 
 const site = lume({
@@ -16,25 +15,17 @@ const site = lume({
 })
 
 const plugins = [
-	jsx_preact(),
+	jsx(),
 	mdx({
 		rehypePlugins: [HeadingsSlug, AutolinksHeadings],
 	}),
 	shiki(),
-	tailwindcss({
-		extensions: [".html", ".tsx"],
-		// @ts-ignore false error
-		options: {
-			corePlugins: {
-				preflight: false,
-			},
-		},
-	}),
-	postcss(),
+	tailwindcss(),
 	sitemap(),
 ]
 
 plugins.forEach((plugin) => site.use(plugin))
+site.add([".css"]);
 
 site.process([".mdx"], (pages) => {
 	pages.forEach((page) => {

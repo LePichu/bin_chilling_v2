@@ -1,18 +1,30 @@
 {
-	"importMap": "./import_map.json",
-	"tasks": {
-		"lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
-		"build": "deno task lume",
-		"serve": "deno task lume -s"
-	},
-	"compilerOptions": {
-		"jsx": "react-jsx",
-		"jsxImportSource": "https://esm.sh/preact@10.11.0"
-	},
-	"fmt": {
-		"indentWidth": 4,
-		"semiColons": false,
-		"useTabs": true,
-		"singleQuote": false
-	}
+  "importMap": "./import_map.json",
+  "tasks": {
+    "lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
+    "build": "deno task lume",
+    "serve": "deno task lume -s"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "lume",
+    "types": [
+      "lume/types.ts"
+    ]
+  },
+  "fmt": {
+    "indentWidth": 4,
+    "semiColons": false,
+    "useTabs": true,
+    "singleQuote": false
+  },
+  "unstable": [
+    "temporal",
+    "fmt-component"
+  ],
+  "lint": {
+    "plugins": [
+      "https://deno.land/x/lume@v3.0.4/lint.ts"
+    ]
+  }
 }
